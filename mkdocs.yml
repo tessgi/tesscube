@@ -1,0 +1,13 @@
+site_name: tessrip
+nav:
+    - Home: README.md
+theme:
+  name: "material"
+  icon:
+      logo: material/film
+repo_url: https://github.com/christinahedges/tessrip
+plugins:
+  - search
+  - mkdocstrings:
+      watch:
+        - src/tessrip

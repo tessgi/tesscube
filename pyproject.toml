@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "tessrip"
+version = "0.1.0"
+description = ""
+authors = ["Christina Hedges <christina.l.hedges@nasa.gov>"]
+readme = "README.md"
+packages = [{include = "tessrip", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "<3.13,>=3.9"
+numpy = "^1.26.1"
+fitsio = "^1.2.1"
+aiohttp = "^3.8.6"
+asyncio = "^3.4.3"
+aiobotocore = "^2.7.0"
+rich = "^13.7.0"
+mkdocs = "^1.5.3"
+mkdocstrings = "^0.24.0"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^4.0.8"
+astropy = "^5.3.4"
+matplotlib = "^3.8.1"
+nest-asyncio = "^1.5.8"
+pytest = "^7.4.3"
+black = "^23.11.0"
+isort = "^5.12.0"
+fbpca = "^1.0"
+scipy = "^1.11.3"
+tqdm = "^4.66.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
