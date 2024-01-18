@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tessrip"
-version = "0.1.0"
+version = "0.1.0dev"
 description = ""
 authors = ["Christina Hedges <christina.l.hedges@nasa.gov>"]
 readme = "README.md"
