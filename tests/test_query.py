@@ -2,7 +2,7 @@ import pytest
 from astropy.io import fits
 
 from tessrip import Rip
-from tessrip.query import _last_hdulist
+from tessrip.query import _last_hdu
 
 
 # This test needs to be run first!
@@ -10,11 +10,11 @@ from tessrip.query import _last_hdulist
 def test_caching():
     # Check that we are doing caching correctly
     r = Rip(sector=1, camera=1, ccd=1)
-    r.last_hdulist  # First call
-    r.last_hdulist  # Second call
+    r.last_hdu  # First call
+    r.last_hdu  # Second call
 
     # Check if the cache has one entry for this function
-    assert _last_hdulist.cache_info().hits == 1
+    assert _last_hdu.cache_info().hits == 1
 
 
 @pytest.mark.remote_data
@@ -35,8 +35,8 @@ def test_rip():
             assert ar.array.shape == (1, 2, 3)
         assert hasattr(r, "center")
         assert hasattr(r, "primary_hdu")
-        assert hasattr(r, "last_hdulist")
+        assert hasattr(r, "last_hdu")
         assert isinstance(r.primary_hdu, fits.PrimaryHDU)
-        assert isinstance(r.last_hdulist, fits.HDUList)
+        assert isinstance(r.last_hdu, fits.BinTableHDU)
         for attr in ["time", "timecorr", "wcs", "cadence_number"]:
             assert hasattr(r, attr)
