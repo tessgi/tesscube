@@ -1,13 +1,12 @@
 import asyncio
-import functools
-import struct
+import bz2
+import json
 import os
+import struct
 import warnings
+from functools import lru_cache, wraps
 from io import BytesIO
 from typing import Optional
-import json
-import bz2
-
 
 import numpy as np
 from aiobotocore.session import get_session
@@ -16,25 +15,45 @@ from astropy.utils.exceptions import AstropyUserWarning
 from astropy.wcs import WCS
 from botocore import UNSIGNED
 from botocore.config import Config
+from joblib import Memory
+
+from . import (BUCKET_NAME, BYTES_PER_PIX, DATA_OFFSET, HDR_SIZE,
+               MAX_CONCURRENT_DOWNLOADS, PACKAGEDIR)
+from .config import CACHE_DIR, USE_DISK_CACHE, get_logger
+from .utils import (WCS_ATTRS, _extract_average_WCS, _fix_primary_hdu,
+                    _sync_call, convert_coordinates_to_runs,
+                    convert_to_native_types)
+
+log = get_logger()
 
 
-from . import (
-    BUCKET_NAME,
-    BYTES_PER_PIX,
-    DATA_OFFSET,
-    HDR_SIZE,
-    MAX_CONCURRENT_DOWNLOADS,
-    log,
-    PACKAGEDIR,
-)
-from .utils import (
-    _extract_average_WCS,
-    _fix_primary_hdu,
-    _sync_call,
-    convert_coordinates_to_runs,
-    convert_to_native_types,
-    WCS_ATTRS,
-)
+def cache(lru_cache_size=32):
+    """
+    Decorator to cache either on disk or in memory
+    """
+    if USE_DISK_CACHE:
+        if "memory" not in globals():
+            global memory
+            memory = Memory(CACHE_DIR, verbose=0)
+        if globals()["memory"].location != CACHE_DIR:
+            memory = Memory(CACHE_DIR, verbose=0)
+
+        def disk_cache_decorator(func):
+            cached_func = memory.cache(func)
+            return cached_func
+
+        return disk_cache_decorator
+    else:
+
+        def memory_cache_decorator(func):
+            @wraps(func)
+            @lru_cache(maxsize=lru_cache_size)
+            def wrapper(*args, **kwargs):
+                return func(*args, **kwargs)
+
+            return wrapper
+
+        return memory_cache_decorator
 
 
 class Rip(object):
@@ -246,7 +265,7 @@ class Rip(object):
         flux, flux_err = np.asarray(values).transpose([3, 2, 0, 1])
         return flux, flux_err
 
-    @functools.lru_cache(maxsize=128)
+    @lru_cache(maxsize=128)
     def get_flux(
         self,
         corner: tuple = (1014, 1058),
@@ -416,7 +435,7 @@ class Rip(object):
 
         return {idx: _get_wcs(idx) for idx in range(self.nframes)}
 
-    @functools.lru_cache(maxsize=128)
+    @lru_cache(maxsize=128)
     def _wcss(self):
         return self._load_wcss()
 
@@ -425,12 +444,12 @@ class Rip(object):
         return self._wcss()
 
 
-@functools.lru_cache()
+@lru_cache()
 def _primary_hdu(object_key):
     return _fix_primary_hdu(_sync_call(async_get_primary_hdu, object_key=object_key))
 
 
-@functools.lru_cache()
+@lru_cache()
 def _last_hdulist(object_key, end):
     return _sync_call(async_get_last_hdulist, object_key=object_key, end=end)
 

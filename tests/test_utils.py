@@ -1,4 +1,3 @@
-import numpy as np
 from astropy.io import fits
 
 from tessrip.utils import _fix_primary_hdu, convert_coordinates_to_runs

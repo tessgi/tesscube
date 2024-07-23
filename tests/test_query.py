@@ -1,4 +1,3 @@
-import numpy as np
 import pytest
 from astropy.io import fits
 
@@ -29,6 +28,7 @@ def test_rip():
             assert ar.array.ndim == 3
             assert ar.array.shape == (ntimes, 2, 3)
         flux, flux_err = r.get_flux(corner=(200, 201), shape=(2, 3), frame_range=(0, 1))
+
         for ar in [flux, flux_err]:
             assert isinstance(ar, fits.Column)
             assert ar.array.ndim == 3

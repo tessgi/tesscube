@@ -11,7 +11,10 @@ from astropy.wcs import WCS
 from botocore import UNSIGNED
 from botocore.config import Config
 
-from . import BUCKET_NAME, __version__, log
+from . import BUCKET_NAME, __version__
+from .config import get_logger
+
+log = get_logger()
 
 
 def convert_to_native_types(obj):
@@ -49,14 +52,17 @@ WCS_ATTRS_STARTS = [
     "2P",
 ]
 
-WCS_ATTRS = lambda hdu: np.hstack(
-    [
-        *[
-            [key for key in hdu.header.keys() if key.startswith(keystart)]
-            for keystart in WCS_ATTRS_STARTS
-        ],
-    ]
-).tolist()
+
+def WCS_ATTRS(hdu):
+    return np.hstack(
+        [
+            *[
+                [key for key in hdu.header.keys() if key.startswith(keystart)]
+                for keystart in WCS_ATTRS_STARTS
+            ],
+        ]
+    ).tolist()
+
 
 # Flag to indicate if nest_asyncio has been applied
 _nest_asyncio_applied = False
