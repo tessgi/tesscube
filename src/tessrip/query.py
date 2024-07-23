@@ -16,11 +16,23 @@ from astropy.wcs import WCS
 from botocore import UNSIGNED
 from botocore.config import Config
 
-from . import (BUCKET_NAME, BYTES_PER_PIX, DATA_OFFSET, HDR_SIZE,
-               MAX_CONCURRENT_DOWNLOADS, PACKAGEDIR, get_logger)
-from .utils import (WCS_ATTRS, _extract_average_WCS, _fix_primary_hdu,
-                    _sync_call, convert_coordinates_to_runs,
-                    convert_to_native_types)
+from . import (
+    BUCKET_NAME,
+    BYTES_PER_PIX,
+    DATA_OFFSET,
+    HDR_SIZE,
+    MAX_CONCURRENT_DOWNLOADS,
+    PACKAGEDIR,
+    get_logger,
+)
+from .utils import (
+    WCS_ATTRS,
+    _extract_average_WCS,
+    _fix_primary_hdu,
+    _sync_call,
+    convert_coordinates_to_runs,
+    convert_to_native_types,
+)
 
 log = get_logger()
 
