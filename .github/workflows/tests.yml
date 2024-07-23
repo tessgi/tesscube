@@ -24,6 +24,3 @@ jobs:
     - name: Test with pytest
       run: |
         make pytest
-    - name: Deploy website
-      run: |
-        make deploy
