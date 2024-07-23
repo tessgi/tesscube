@@ -4,7 +4,7 @@ import json
 import os
 import struct
 import warnings
-from functools import lru_cache, wraps
+from functools import lru_cache
 from io import BytesIO
 from typing import Optional
 
@@ -15,45 +15,26 @@ from astropy.utils.exceptions import AstropyUserWarning
 from astropy.wcs import WCS
 from botocore import UNSIGNED
 from botocore.config import Config
-from joblib import Memory
 
-from . import (BUCKET_NAME, BYTES_PER_PIX, DATA_OFFSET, HDR_SIZE,
-               MAX_CONCURRENT_DOWNLOADS, PACKAGEDIR)
-from .config import CACHE_DIR, USE_DISK_CACHE, get_logger
-from .utils import (WCS_ATTRS, _extract_average_WCS, _fix_primary_hdu,
-                    _sync_call, convert_coordinates_to_runs,
-                    convert_to_native_types)
+from . import (
+    BUCKET_NAME,
+    BYTES_PER_PIX,
+    DATA_OFFSET,
+    HDR_SIZE,
+    MAX_CONCURRENT_DOWNLOADS,
+    PACKAGEDIR,
+    get_logger,
+)
+from .utils import (
+    WCS_ATTRS,
+    _extract_average_WCS,
+    _fix_primary_hdu,
+    _sync_call,
+    convert_coordinates_to_runs,
+    convert_to_native_types,
+)
 
 log = get_logger()
-
-
-def cache(lru_cache_size=32):
-    """
-    Decorator to cache either on disk or in memory
-    """
-    if USE_DISK_CACHE:
-        if "memory" not in globals():
-            global memory
-            memory = Memory(CACHE_DIR, verbose=0)
-        if globals()["memory"].location != CACHE_DIR:
-            memory = Memory(CACHE_DIR, verbose=0)
-
-        def disk_cache_decorator(func):
-            cached_func = memory.cache(func)
-            return cached_func
-
-        return disk_cache_decorator
-    else:
-
-        def memory_cache_decorator(func):
-            @wraps(func)
-            @lru_cache(maxsize=lru_cache_size)
-            def wrapper(*args, **kwargs):
-                return func(*args, **kwargs)
-
-            return wrapper
-
-        return memory_cache_decorator
 
 
 class Rip(object):
@@ -92,16 +73,16 @@ class Rip(object):
         return _primary_hdu(object_key=self.object_key)
 
     @property
-    def last_hdulist(self):
+    def last_hdu(self):
         end = (
             DATA_OFFSET
             + (self.ncolumns * self.nframes * self.nsets * self.nrows) * BYTES_PER_PIX
         )
-        return _last_hdulist(object_key=self.object_key, end=end)
+        return _last_hdu(object_key=self.object_key, end=end)
 
     @property
     def ffi_names(self):
-        return list(self.last_hdulist[0].data["FFI_FILE"])
+        return list(self.last_hdu.data["FFI_FILE"])
 
     def find_byte_offset(self, row: int, column: int, frame: int = 0) -> int:
         """Returns the byte offset of a specific pixel position."""
@@ -340,10 +321,7 @@ class Rip(object):
             format="D",
             unit="BJD - 2457000, days",
             disp="D14.7",
-            array=(
-                self.last_hdulist[0].data["TSTART"] + self.last_hdulist[0].data["TSTOP"]
-            )
-            / 2,
+            array=(self.last_hdu.data["TSTART"] + self.last_hdu.data["TSTOP"]) / 2,
         )
 
     @property
@@ -353,7 +331,7 @@ class Rip(object):
             format="E",
             unit="d",
             disp="E14.7",
-            array=self.last_hdulist[0].data["BARYCORR"],
+            array=self.last_hdu.data["BARYCORR"],
         )
 
     @property
@@ -362,7 +340,7 @@ class Rip(object):
             name="QUALITY",
             format="J",
             disp="B16.16",
-            array=self.last_hdulist[0].data["DQUALITY"],
+            array=self.last_hdu.data["DQUALITY"],
         )
 
     @property
@@ -370,28 +348,28 @@ class Rip(object):
         return fits.Column(
             name="NUM_FRM",
             format="I",
-            array=self.last_hdulist[0].data["NUM_FRM"],
+            array=self.last_hdu.data["NUM_FRM"],
         )
 
     @property
     def cadence_number(self):
         cadence_number = np.cumsum(
             np.round(
-                np.diff(self.last_hdulist[0].data["TSTART"])
-                / np.median(self.last_hdulist[0].data["TELAPSE"])
+                np.diff(self.last_hdu.data["TSTART"])
+                / np.median(self.last_hdu.data["TELAPSE"])
             ).astype(int)
         )
         return fits.Column(name="CADENCENO", format="I", array=cadence_number)
 
     @property
     def wcs(self):
-        return _extract_average_WCS(self.last_hdulist[0])
+        return _extract_average_WCS(self.last_hdu)
 
     def _save_wcss(self, dir=None):
         if dir is None:
             dir = f"{PACKAGEDIR}/data/s{self.sector:04}/"
         os.makedirs(dir, exist_ok=True)
-        hdu = self.last_hdulist[0]
+        hdu = self.last_hdu
         wcs_dict = {
             attr: hdu.data[attr].tolist()
             if isinstance(hdu.data[attr][0], (float, np.integer, int))
@@ -414,7 +392,7 @@ class Rip(object):
             self._save_wcss()
         with bz2.open(filename, "rt", encoding="utf-8") as f:
             loaded_dict = json.load(f)
-        wcs_attrs = WCS_ATTRS(self.last_hdulist[0])
+        wcs_attrs = WCS_ATTRS(self.last_hdu)
         hdr = fits.PrimaryHDU().header
 
         def _get_wcs(idx):
@@ -450,8 +428,8 @@ def _primary_hdu(object_key):
 
 
 @lru_cache()
-def _last_hdulist(object_key, end):
-    return _sync_call(async_get_last_hdulist, object_key=object_key, end=end)
+def _last_hdu(object_key, end):
+    return _sync_call(async_get_last_hdu, object_key=object_key, end=end)
 
 
 async def async_get_primary_hdu(object_key):
@@ -483,7 +461,7 @@ async def async_get_primary_hdu(object_key):
                 return hdulist[0]
 
 
-async def async_get_last_hdulist(object_key, end):
+async def async_get_last_hdu(object_key, end):
     # This seems wrong for a lot of sets
     async with get_session().create_client(
         "s3", config=Config(signature_version=UNSIGNED)
@@ -500,4 +478,4 @@ async def async_get_last_hdulist(object_key, end):
             BytesIO(first_bytes.lstrip(b"\x00")),
             ignore_missing_simple=True,
             lazy_load_hdus=False,
-        )
+        )[0]

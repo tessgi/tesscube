@@ -12,4 +12,3 @@ jobs:
         with:
           options: "--check --verbose"
           src: "./src"
-          version: "22.12.0"
