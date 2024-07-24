@@ -90,9 +90,8 @@ class Rip(object):
         #     raise ValueError(f"`(row, column)` position `({row}, {column})` is outside of range.")
         # Subtract 1 from column and row because the byte location assumes zero-indexing,
         # whereas the TESS convention is to address column and row number with one-indexing.
-        pixel_offset = (column - 1) * self.nframes * self.nsets + (
-            row - 1
-        ) * self.ncolumns * self.nframes * self.nsets
+        pixel_offset = ((column - 1) * self.nframes * self.nsets
+                        + (row - 1) * self.ncolumns * self.nframes * self.nsets)
         pixel_offset += frame * self.nsets
         return DATA_OFFSET + BYTES_PER_PIX * pixel_offset
 
@@ -213,11 +212,53 @@ class Rip(object):
                 values = await asyncio.gather(*tasks)
                 return values
 
-    def get_pixel_timeseries(self, coordinates):
-        runs = convert_coordinates_to_runs(coordinates)
-        flux, flux_err = np.vstack(
-            _sync_call(self._async_get_data_per_rows, runs=runs)
-        ).transpose([2, 1, 0])
+    async def _async_get_data_per_coordinates(
+        self,
+        coordinates: list[tuple],
+        frame_range: tuple
+    ):
+
+        semaphore = asyncio.Semaphore(MAX_CONCURRENT_DOWNLOADS)
+        async with get_session().create_client(
+            "s3", config=Config(signature_version=UNSIGNED)
+        ) as s3:
+            tasks = []
+            for coordinate in coordinates:
+                task = asyncio.create_task(
+                    self._async_get_data_per_pixel(
+                        s3,
+                        semaphore,
+                        column=coordinate[1],
+                        row=coordinate[0],
+                        frame_range=frame_range,
+                        )
+                )
+                tasks.append(task)
+            values = await asyncio.gather(*tasks)
+            return values
+
+    def get_pixel_timeseries(
+        self,
+        coordinates: list[tuple],
+        frame_range: Optional[tuple]=None
+        ):
+        if frame_range is not None:
+            npix = len(coordinates)
+            nframes = frame_range[1] - frame_range[0]
+            flux, flux_err = np.vstack(
+                _sync_call(
+                    self._async_get_data_per_coordinates,
+                    coordinates=coordinates,
+                    frame_range=frame_range
+                    )
+            ).reshape(npix, nframes, 2).transpose([2,1,0])
+
+        else:
+            runs = convert_coordinates_to_runs(coordinates)
+            flux, flux_err = np.vstack(
+                _sync_call(self._async_get_data_per_rows, runs=runs)
+            ).transpose([2, 1, 0])
+
         return flux, flux_err
 
     async def _async_get_flux(
