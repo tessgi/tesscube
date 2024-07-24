@@ -115,11 +115,40 @@ def convert_coordinates_to_runs(coordinates):
 
     return result
 
+def _fix_table_hdu(hdu):
+    """Fixes the table HDU (hdu[1].header) to mimic TESS official products.
+        This starts with the table and the relevant properties but adds other 
+        required information.
+        Right now, the tablehdu is only being set using the columns time,timecorr,cadence_number,quality,flux, andflux_err,
+        TODO list
+        -Add time info (TIMESYS,TASSIGN,TIMEREF, BJDREFF, BJDREFI, TIMEUNIT ) to the first extension
+        -NAXIS 1-4 are incorrectly in the primary header. They should be moved here and reflect the Rip output, not the FFI as a whole.
+        -Pixel info is needed. Below is a full list, but especially crpx and crvl, cdlt are important
+            -note, these are obnoxiously redundant in existing data, so its up to us if we want to streamline
+            -1CTYP4, 2CTYP4,1CRPX4,2CRPX4,1CRVL4,2CRVL4,1CUNI4,2CUNI4,1CDLT4,2CDLT4,11PC4,
+             12PC4,21PC4,22PC4,WCSN5P,WCAX5P,1CTY5P,2CTY5P,1CUN5P,2CUN5P,1CRV5P,2CRV5P,1CDL5P,2CDL5P,1CRP5P,2CRP5P,WCAX5
+        -SIMDATA could be set to F
+        -TELESCOP/INSTRUME could be TESS/TESS Photometer
+        -could think about object/ticid but it doesn't apply as we have it now. Could be set to None though
+        -TSTART/TSTOP and DATE-OBS/DATE-END currently not included
+        -READTIME/FRAMETIM do we want to specify?
+        -GAINA, GAINB, GAINC, GAIND and READNOIA, READNOIB, READNOIC, AND READNOID can be added
+        -FLFRCSAP/CROWDSAP could be set to None to make it easier to add later?
+
+
+
+    """
 
 def _fix_primary_hdu(hdu):
-    """Fixes the primary HDU header to mimic TESS official products.
+    """Fixes the primary HDU (hdu[0].header) to mimic TESS official products.
 
     This is largely taken from MASTs astrocut package under the BSD license.
+
+    TODO: 
+    -Consider adding the s3 bucket URL to primary header
+    -RA_OBJ and DEC_OBJ could be set for the center of the cutout
+    -Add CHECKSUM (TESSCut also has a DATASUM)
+     
     """
     log.debug("Fixing primary HDU.")
     hdu0 = hdu.copy()
