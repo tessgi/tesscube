@@ -6,13 +6,14 @@ import struct
 import warnings
 from functools import lru_cache
 from io import BytesIO
-from typing import Optional
+from typing import Optional, Union, Tuple, List
 
 import numpy as np
 from aiobotocore.session import get_session
 from astropy.io import fits
 from astropy.utils.exceptions import AstropyUserWarning
 from astropy.wcs import WCS
+from astropy.coordinates import SkyCoord
 from botocore import UNSIGNED
 from botocore.config import Config
 
@@ -259,12 +260,16 @@ class Rip(object):
             array=flux_err,
         )
         return flux, flux_err
-        
+
     def get_pixel_timeseries(
         self,
-        coordinates: list[tuple],
-        frame_range: Optional[tuple]=None
-        ):
+        coordinates: Union[List[Tuple[int, int]], SkyCoord],
+        frame_range: Optional[Tuple[int, int]]=None
+        ) -> Tuple[fits.Column, fits.Column]:
+        if isinstance(coordinates, SkyCoord):
+            coordinates = np.round(
+                self.wcs.world_to_pixel(coordinates)
+            ).astype(int)
         if frame_range is not None:
             npix = len(coordinates)
             nframes = frame_range[1] - frame_range[0]
