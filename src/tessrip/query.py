@@ -237,6 +237,29 @@ class Rip(object):
             values = await asyncio.gather(*tasks)
             return values
 
+    @staticmethod
+    def to_column(flux, flux_err):
+        tform = str(flux[0].size) + "E"
+        dims = str(flux[0].shape[::-1])
+
+        flux = fits.Column(
+            name="FLUX",
+            format=tform,
+            dim=dims,
+            unit="e-/s",
+            disp="E14.7",
+            array=flux
+        )
+        flux_err = fits.Column(
+            name="FLUX_ERR",
+            format=tform,
+            dim=dims,
+            unit="e-/s",
+            disp="E14.7",
+            array=flux_err,
+        )
+        return flux, flux_err
+        
     def get_pixel_timeseries(
         self,
         coordinates: list[tuple],
@@ -259,7 +282,7 @@ class Rip(object):
                 _sync_call(self._async_get_data_per_rows, runs=runs)
             ).transpose([2, 1, 0])
 
-        return flux, flux_err
+        return self.to_column(flux, flux_err)
 
     async def _async_get_flux(
         self,
@@ -304,20 +327,8 @@ class Rip(object):
             nrows=shape[0],
             frame_range=frame_range,
         )
-        tform = str(flux[0].size) + "E"
-        dims = str(flux[0].shape[::-1])
 
-        flux, flux_err = fits.Column(
-            name="FLUX", format=tform, dim=dims, unit="e-/s", disp="E14.7", array=flux
-        ), fits.Column(
-            name="FLUX_ERR",
-            format=tform,
-            dim=dims,
-            unit="e-/s",
-            disp="E14.7",
-            array=flux_err,
-        )
-        return flux, flux_err
+        return self.to_column(flux, flux_err)
 
     def get_tpf(
         self,
