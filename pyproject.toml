@@ -33,6 +33,7 @@ tqdm = "^4.66.1"
 mkdocs = "^1.5.3"
 mkdocstrings = "^0.24.0"
 ipywidgets = "^8.1.2"
+astrocut = "^0.11.0"
 
 
 [build-system]

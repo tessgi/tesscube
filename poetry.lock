@@ -255,6 +255,153 @@ doc = ["doc8", "sphinx (>=7.0.0)", "sphinx-autobuild", "sphinx-autodoc-typehints
 test = ["dateparser (==1.*)", "pre-commit", "pytest", "pytest-cov", "pytest-mock", "pytz (==2021.1)", "simplejson (==3.*)"]
 
 [[package]]
+name = "asdf"
+version = "3.3.0"
+description = "Python implementation of the ASDF Standard"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "asdf-3.3.0-py3-none-any.whl", hash = "sha256:1c5bf50122da7e124ed31648d04a81653716c5888716eb0672b204f6bb94fa7d"},
+    {file = "asdf-3.3.0.tar.gz", hash = "sha256:6aea21f7944fdd979d383773511e529ef30adade14b4037e5080fc16c7459e5f"},
+]
+
+[package.dependencies]
+asdf-standard = ">=1.1.0"
+asdf-transform-schemas = ">=0.3"
+attrs = ">=20.1.0"
+importlib-metadata = ">=4.11.4"
+jmespath = ">=0.6.2"
+numpy = ">=1.22"
+packaging = ">=19"
+pyyaml = ">=5.4.1"
+semantic-version = ">=2.8"
+
+[package.extras]
+all = ["lz4 (>=0.10)"]
+docs = ["graphviz", "sphinx-asdf (>=0.2.2)", "sphinx-inline-tabs", "tomli"]
+tests = ["fsspec[http] (>=2022.8.2)", "lz4 (>=0.10)", "psutil", "pytest (>=7)", "pytest-remotedata"]
+
+[[package]]
+name = "asdf-astropy"
+version = "0.6.1"
+description = "ASDF serialization support for astropy"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "asdf-astropy-0.6.1.tar.gz", hash = "sha256:97aef973a0e585a36314b5215948dfc1ac76d44ce32e16af1592f91ca3bcf2c6"},
+    {file = "asdf_astropy-0.6.1-py3-none-any.whl", hash = "sha256:327c2826e0e0bdb144820df43f2afd782562549c1d577914306216ed11fb8508"},
+]
+
+[package.dependencies]
+asdf = ">=2.13"
+asdf-coordinates-schemas = ">=0.3"
+asdf-standard = ">=1.1.0"
+asdf-transform-schemas = ">=0.5"
+astropy = ">=5.0.4"
+numpy = ">=1.20"
+packaging = ">=19"
+
+[package.extras]
+docs = ["docutils", "graphviz", "matplotlib", "sphinx", "sphinx-asdf", "sphinx-astropy", "sphinx-automodapi", "tomli"]
+test = ["coverage", "pytest", "pytest-astropy", "scipy"]
+
+[[package]]
+name = "asdf-coordinates-schemas"
+version = "0.3.0"
+description = "ASDF schemas for coordinates"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "asdf_coordinates_schemas-0.3.0-py3-none-any.whl", hash = "sha256:9afe55443b9e6ab80c95fe57befef353ead0a95c5714904da29965c63ca81451"},
+    {file = "asdf_coordinates_schemas-0.3.0.tar.gz", hash = "sha256:c98b6015dcec87a158fcde7798583f0615d08125fa6e1e9de16c4eb03fcd604e"},
+]
+
+[package.dependencies]
+asdf = ">=2.12.1"
+asdf-standard = ">=1.1.0"
+
+[package.extras]
+docs = ["astropy (>=5.0.4)", "docutils", "graphviz", "matplotlib", "sphinx", "sphinx-asdf (>=0.1.3)", "sphinx-astropy", "sphinx-rtd-theme", "tomli"]
+test = ["asdf-astropy (>=0.2.0)", "pytest"]
+
+[[package]]
+name = "asdf-standard"
+version = "1.1.1"
+description = "The ASDF Standard schemas"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "asdf_standard-1.1.1-py3-none-any.whl", hash = "sha256:9b559b5d43f086a3e9e12604fb591e056e5d8c0b4a1d2d99a011d278afbc6fd8"},
+    {file = "asdf_standard-1.1.1.tar.gz", hash = "sha256:01535bc2b15bfc09ec8a62d4999f9cf32dc49dc71660c8425640228fd8776102"},
+]
+
+[package.extras]
+docs = ["docutils", "graphviz", "matplotlib", "sphinx (>=4.0)", "sphinx-asdf (>=0.1.3)", "sphinx-rtd-theme (>1.2.0)", "tomli"]
+test = ["asdf (>=3.0.0)", "packaging (>=16.0)", "pytest", "pyyaml"]
+
+[[package]]
+name = "asdf-transform-schemas"
+version = "0.5.0"
+description = "ASDF schemas for transforms"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "asdf_transform_schemas-0.5.0-py3-none-any.whl", hash = "sha256:9f91bfd964b905d0deff269b057a75b2b3745c462c3b9e7897242844fbc4cfe8"},
+    {file = "asdf_transform_schemas-0.5.0.tar.gz", hash = "sha256:82cf4c782575734a895327f25ff583ce9499d7e2b836fe8880b2d7961c6b462b"},
+]
+
+[package.dependencies]
+asdf-standard = ">=1.1.0"
+
+[package.extras]
+docs = ["astropy (>=5.0.4)", "docutils", "graphviz", "matplotlib", "sphinx", "sphinx-asdf (>=0.1.3)", "sphinx-astropy", "sphinx-rtd-theme", "tomli"]
+test = ["asdf (>=2.8.0)", "asdf-astropy", "pytest", "scipy"]
+
+[[package]]
+name = "asdf-wcs-schemas"
+version = "0.4.0"
+description = "ASDF WCS schemas"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "asdf_wcs_schemas-0.4.0-py3-none-any.whl", hash = "sha256:ffd0dc9d01ff453c8e81793f93a76c4cdd7780b0156d39c93b8017df49180a01"},
+    {file = "asdf_wcs_schemas-0.4.0.tar.gz", hash = "sha256:c0bb44b8a5f16e2e23b028bcf4360729f5047a8d19063f1c8d817590d0b308b4"},
+]
+
+[package.dependencies]
+asdf-coordinates-schemas = ">=0.3.0"
+asdf-standard = ">=1.1.0"
+asdf-transform-schemas = ">=0.5.0"
+
+[package.extras]
+docs = ["astropy (>=5.0.4)", "docutils", "graphviz", "matplotlib", "sphinx", "sphinx-asdf (>=0.1.3)", "sphinx-astropy", "sphinx-rtd-theme", "tomli"]
+test = ["asdf (>=2.8.0)", "asdf-astropy", "pytest (>=4.6.0)"]
+
+[[package]]
+name = "astrocut"
+version = "0.11.0"
+description = "Cutout tools for astronomical images"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "astrocut-0.11.0-py3-none-any.whl", hash = "sha256:f9762e847a11a09dbd2f3a07f94f3265a9002d909fd97c70c6e193cdc8b62456"},
+    {file = "astrocut-0.11.0.tar.gz", hash = "sha256:25f80f88a25dd2cb944cccc50f3ed8a2de82017e551b6cad56261525063881aa"},
+]
+
+[package.dependencies]
+asdf = ">=2.15.0"
+astropy = ">=5.2"
+fsspec = {version = ">=2022.8.2", extras = ["http"]}
+Pillow = "*"
+roman-datamodels = ">=0.17.0"
+s3fs = ">=2022.8.2"
+scipy = "*"
+
+[package.extras]
+docs = ["docutils (==0.16)", "sphinx (!=4.1.0)", "sphinx-astropy", "sphinx-rtd-theme (>=0.5.2)"]
+test = ["astroquery (>=0.4.6)", "pytest-astropy"]
+
+[[package]]
 name = "astropy"
 version = "5.3.4"
 description = "Astronomy and astrophysics core library"
@@ -1076,6 +1223,48 @@ files = [
 ]
 
 [[package]]
+name = "fsspec"
+version = "2024.6.1"
+description = "File-system specification"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "fsspec-2024.6.1-py3-none-any.whl", hash = "sha256:3cb443f8bcd2efb31295a5b9fdb02aee81d8452c80d28f97a6d0959e6cee101e"},
+    {file = "fsspec-2024.6.1.tar.gz", hash = "sha256:fad7d7e209dd4c1208e3bbfda706620e0da5142bebbd9c384afb95b07e798e49"},
+]
+
+[package.dependencies]
+aiohttp = {version = "<4.0.0a0 || >4.0.0a0,<4.0.0a1 || >4.0.0a1", optional = true, markers = "extra == \"http\""}
+
+[package.extras]
+abfs = ["adlfs"]
+adl = ["adlfs"]
+arrow = ["pyarrow (>=1)"]
+dask = ["dask", "distributed"]
+dev = ["pre-commit", "ruff"]
+doc = ["numpydoc", "sphinx", "sphinx-design", "sphinx-rtd-theme", "yarl"]
+dropbox = ["dropbox", "dropboxdrivefs", "requests"]
+full = ["adlfs", "aiohttp (!=4.0.0a0,!=4.0.0a1)", "dask", "distributed", "dropbox", "dropboxdrivefs", "fusepy", "gcsfs", "libarchive-c", "ocifs", "panel", "paramiko", "pyarrow (>=1)", "pygit2", "requests", "s3fs", "smbprotocol", "tqdm"]
+fuse = ["fusepy"]
+gcs = ["gcsfs"]
+git = ["pygit2"]
+github = ["requests"]
+gs = ["gcsfs"]
+gui = ["panel"]
+hdfs = ["pyarrow (>=1)"]
+http = ["aiohttp (!=4.0.0a0,!=4.0.0a1)"]
+libarchive = ["libarchive-c"]
+oci = ["ocifs"]
+s3 = ["s3fs"]
+sftp = ["paramiko"]
+smb = ["smbprotocol"]
+ssh = ["paramiko"]
+test = ["aiohttp (!=4.0.0a0,!=4.0.0a1)", "numpy", "pytest", "pytest-asyncio (!=0.22.0)", "pytest-benchmark", "pytest-cov", "pytest-mock", "pytest-recording", "pytest-rerunfailures", "requests"]
+test-downstream = ["aiobotocore (>=2.5.4,<3.0.0)", "dask-expr", "dask[dataframe,test]", "moto[server] (>4,<5)", "pytest-timeout", "xarray"]
+test-full = ["adlfs", "aiohttp (!=4.0.0a0,!=4.0.0a1)", "cloudpickle", "dask", "distributed", "dropbox", "dropboxdrivefs", "fastparquet", "fusepy", "gcsfs", "jinja2", "kerchunk", "libarchive-c", "lz4", "notebook", "numpy", "ocifs", "pandas", "panel", "paramiko", "pyarrow", "pyarrow (>=1)", "pyftpdlib", "pygit2", "pytest", "pytest-asyncio (!=0.22.0)", "pytest-benchmark", "pytest-cov", "pytest-mock", "pytest-recording", "pytest-rerunfailures", "python-snappy", "requests", "smbprotocol", "tqdm", "urllib3", "zarr", "zstandard"]
+tqdm = ["tqdm"]
+
+[[package]]
 name = "ghp-import"
 version = "2.1.0"
 description = "Copy your docs directly to the gh-pages branch."
@@ -1091,6 +1280,29 @@ python-dateutil = ">=2.8.1"
 
 [package.extras]
 dev = ["flake8", "markdown", "twine", "wheel"]
+
+[[package]]
+name = "gwcs"
+version = "0.21.0"
+description = "Generalized World Coordinate System"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "gwcs-0.21.0-py3-none-any.whl", hash = "sha256:5a89f512d2a9b2933534fa454b0f34361f714d896f53d9a4b9d1b3a2831b58cc"},
+    {file = "gwcs-0.21.0.tar.gz", hash = "sha256:8cd27f1ce6b25ad72cc33ca2e4178ab29d82050344c710713f74992136a1c5ba"},
+]
+
+[package.dependencies]
+asdf = ">=2.8.1"
+asdf-astropy = ">=0.2.0"
+asdf-wcs-schemas = ">=0.4.0"
+astropy = ">=5.3"
+numpy = "*"
+scipy = "*"
+
+[package.extras]
+docs = ["sphinx", "sphinx-asdf", "sphinx-astropy", "sphinx-automodapi", "sphinx-rtd-theme", "stsci-rtd-theme", "tomli"]
+test = ["ci-watson (>=0.3.0)", "pytest (>=4.6.0)", "pytest-astropy"]
 
 [[package]]
 name = "h11"
@@ -2966,6 +3178,25 @@ files = [
 cffi = {version = "*", markers = "implementation_name == \"pypy\""}
 
 [[package]]
+name = "rad"
+version = "0.19.0"
+description = "Roman Attribute Dictionary"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "rad-0.19.0-py3-none-any.whl", hash = "sha256:7c55dd7d06878288a244c24e2aa2c52ffc28c994902f930f1093fb129aa8a3db"},
+    {file = "rad-0.19.0.tar.gz", hash = "sha256:ed8d8bd8c69bd7a9fae590bc2dca43b1b44edb360337d37f306fe01d76b6e332"},
+]
+
+[package.dependencies]
+asdf = ">=2.14.2"
+asdf-astropy = ">=0.5.0"
+
+[package.extras]
+docs = ["astropy (>=5.0.4)", "docutils", "graphviz", "importlib-metadata", "matplotlib", "sphinx", "sphinx-asdf (>=0.1.3)", "sphinx-astropy", "stsci-rtd-theme", "tomli"]
+test = ["crds (>=11.16.16)", "pytest (>=4.6.0)", "pytest-doctestplus (>=0.11.1)"]
+
+[[package]]
 name = "referencing"
 version = "0.35.1"
 description = "JSON Referencing + Python"
@@ -3043,6 +3274,32 @@ pygments = ">=2.13.0,<3.0.0"
 
 [package.extras]
 jupyter = ["ipywidgets (>=7.5.1,<9)"]
+
+[[package]]
+name = "roman-datamodels"
+version = "0.19.0"
+description = "data models supporting calibration of the Nancy Grace Roman Space Telescope"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "roman_datamodels-0.19.0-py3-none-any.whl", hash = "sha256:095e9e3637ff1d4d89e40186dc5e8ab8920bcc8e1c98af2975221fe2b2fe7668"},
+    {file = "roman_datamodels-0.19.0.tar.gz", hash = "sha256:92b898f56e2136a0e3d7f061de7e96ad4c7ae11d363766fb4bd89d616436a0fa"},
+]
+
+[package.dependencies]
+asdf = ">=2.15.0"
+asdf-astropy = ">=0.5.0"
+asdf-standard = ">=1.0.3"
+astropy = ">=5.3.0"
+gwcs = ">=0.18.1"
+numpy = ">=1.22"
+psutil = ">=5.7.2"
+rad = ">=0.19.0"
+
+[package.extras]
+aws = ["stsci-aws-utils (>=0.1.2)"]
+docs = ["sphinx", "sphinx-asdf", "sphinx-astropy", "sphinx-automodapi", "sphinx-rtd-theme", "stsci-rtd-theme", "tomli"]
+test = ["pytest (>=6.0.0)", "pytest-doctestplus", "pytest-doctestplus (>=0.10.0)", "pytest-env (>=0.8)"]
 
 [[package]]
 name = "rpds-py"
@@ -3153,6 +3410,26 @@ files = [
 ]
 
 [[package]]
+name = "s3fs"
+version = "2024.6.1"
+description = "Convenient Filesystem interface over S3"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "s3fs-2024.6.1-py3-none-any.whl", hash = "sha256:ecd20863437409eec1cbfff0b7df5e9772cf7c1926008efab2e17e46f6d52c63"},
+    {file = "s3fs-2024.6.1.tar.gz", hash = "sha256:6c2106d6c34fbfbb88e3d20c6f3572896d5ee3d3512896696301c21a3c541bea"},
+]
+
+[package.dependencies]
+aiobotocore = ">=2.5.4,<3.0.0"
+aiohttp = "<4.0.0a0 || >4.0.0a0,<4.0.0a1 || >4.0.0a1"
+fsspec = "==2024.6.1.*"
+
+[package.extras]
+awscli = ["aiobotocore[awscli] (>=2.5.4,<3.0.0)"]
+boto3 = ["aiobotocore[boto3] (>=2.5.4,<3.0.0)"]
+
+[[package]]
 name = "scipy"
 version = "1.13.1"
 description = "Fundamental algorithms for scientific computing in Python"
@@ -3193,6 +3470,21 @@ numpy = ">=1.22.4,<2.3"
 dev = ["cython-lint (>=0.12.2)", "doit (>=0.36.0)", "mypy", "pycodestyle", "pydevtool", "rich-click", "ruff", "types-psutil", "typing_extensions"]
 doc = ["jupyterlite-pyodide-kernel", "jupyterlite-sphinx (>=0.12.0)", "jupytext", "matplotlib (>=3.5)", "myst-nb", "numpydoc", "pooch", "pydata-sphinx-theme (>=0.15.2)", "sphinx (>=5.0.0)", "sphinx-design (>=0.4.0)"]
 test = ["array-api-strict", "asv", "gmpy2", "hypothesis (>=6.30)", "mpmath", "pooch", "pytest", "pytest-cov", "pytest-timeout", "pytest-xdist", "scikit-umfpack", "threadpoolctl"]
+
+[[package]]
+name = "semantic-version"
+version = "2.10.0"
+description = "A library implementing the 'SemVer' scheme."
+optional = false
+python-versions = ">=2.7"
+files = [
+    {file = "semantic_version-2.10.0-py2.py3-none-any.whl", hash = "sha256:de78a3b8e0feda74cabc54aab2da702113e33ac9d9eb9d2389bcf1f58b7d9177"},
+    {file = "semantic_version-2.10.0.tar.gz", hash = "sha256:bdabb6d336998cbb378d4b9db3a4b56a1e3235701dc05ea2690d9a997ed5041c"},
+]
+
+[package.extras]
+dev = ["Django (>=1.11)", "check-manifest", "colorama (<=0.4.1)", "coverage", "flake8", "nose2", "readme-renderer (<25.0)", "tox", "wheel", "zest.releaser[recommended]"]
+doc = ["Sphinx", "sphinx-rtd-theme"]
 
 [[package]]
 name = "send2trash"
@@ -3760,4 +4052,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "<3.13,>=3.9"
-content-hash = "a53d88490c0611c4312f551223f972cf051aa87fe969fc335c990f74625904f7"
+content-hash = "d5f87393f017eec57310db763a5419c0b01cdb49cd76893d327579d007033dc7"
