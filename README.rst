@@ -1,18 +1,18 @@
-.. image:: <https://github.com/tessgi/tesscube/actions/workflows/python-app.yml/badge.svg>
-    :target: <https://github.com/tessgi/tesscube/actions/workflows/python-app.yml>
-    :alt: Test status
-
-.. image:: <https://badge.fury.io/py/tesscube.svg>
-    :target: <https://badge.fury.io/py/tesscube>
-    :alt: PyPI version
-
-.. image:: <https://img.shields.io/badge/documentation-live-blue.svg>
-    :target: <https://tessgi.github.io/tesscube/>
-    :alt: Documentation
-
 ########
 tesscube
 ########
+
+.. image:: https://github.com/tessgi/tesscube/actions/workflows/python-app.yml/badge.svg
+    :target: https://github.com/tessgi/tesscube/actions/workflows/python-app.yml
+    :alt: Test status
+
+.. image:: https://badge.fury.io/py/tesscube.svg
+    :target: https://badge.fury.io/py/tesscube
+    :alt: PyPI version
+
+.. image:: https://img.shields.io/badge/documentation-live-blue.svg
+    :target: https://tessgi.github.io/tesscube/
+    :alt: Documentation
 
 .. <!-- intro content start -->
 
