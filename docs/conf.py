@@ -113,4 +113,3 @@ intersphinx_mapping = {
     "astroquery": ("https://astroquery.readthedocs.io/en/latest/", None),
     "pandas": ("https://pandas.pydata.org/docs/", None),
 }
-
