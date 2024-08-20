@@ -1,7 +1,5 @@
+"""Mixin class to enable queries. This is in a separate class for readability."""
 import asyncio
-import bz2
-import json
-import os
 import struct
 import warnings
 from functools import lru_cache
@@ -12,78 +10,16 @@ import numpy as np
 from aiobotocore.session import get_session
 from astropy.io import fits
 from astropy.utils.exceptions import AstropyUserWarning
-from astropy.wcs import WCS
 from botocore import UNSIGNED
 from botocore.config import Config
 
-from . import (
-    BUCKET_NAME,
-    BYTES_PER_PIX,
-    DATA_OFFSET,
-    HDR_SIZE,
-    MAX_CONCURRENT_DOWNLOADS,
-    PACKAGEDIR,
-    get_logger,
-)
-from .utils import (
-    WCS_ATTRS,
-    _extract_average_WCS,
-    _fix_primary_hdu,
-    _sync_call,
-    convert_coordinates_to_runs,
-    convert_to_native_types,
-)
-
-log = get_logger()
+from . import (BUCKET_NAME, BYTES_PER_PIX, DATA_OFFSET, HDR_SIZE,
+               MAX_CONCURRENT_DOWNLOADS)
+from .fits import _fix_primary_hdu
+from .utils import _sync_call, convert_coordinates_to_runs
 
 
-class Rip(object):
-    """Ripper object to obtain portions of TESS data cube from MASTs AWS bucket
-
-    This object will grab particular bytes out of the TESS data cubes to try to make obtaining data from the cubes efficient.
-    """
-
-    def __init__(self, sector: int, camera: int, ccd: int):
-        self.sector, self.camera, self.ccd = sector, camera, ccd
-        self.object_key = f"tess/public/mast/tess-s{sector:04}-{camera}-{ccd}-cube.fits"
-        (
-            self.nsets,
-            self.nframes,
-            self.ncolumns,
-            self.nrows,
-        ) = (
-            self.primary_hdu.header["NAXIS1"],
-            self.primary_hdu.header["NAXIS2"],
-            self.primary_hdu.header["NAXIS3"],
-            self.primary_hdu.header["NAXIS4"],
-        )
-
-    @property
-    def center(self):
-        if hasattr(self, "corner"):
-            return (
-                self.corner[0] + self.shape[0] / 2,
-                self.corner[1] + self.shape[1] / 2,
-            )
-        else:
-            raise ValueError("Run `get_flux` to specify a region.")
-
-    @property
-    def primary_hdu(self):
-        return _primary_hdu(object_key=self.object_key)
-
-    @property
-    def last_hdu(self):
-        end = (
-            DATA_OFFSET
-            + (self.ncolumns * self.nframes * self.nsets * self.nrows) * BYTES_PER_PIX
-        )
-        return _last_hdu(object_key=self.object_key, end=end)
-
-    @property
-    def ffi_names(self):
-        return list(self.last_hdu.data["FFI_FILE"])
-
+class QueryMixin:
     def find_byte_offset(self, row: int, column: int, frame: int = 0) -> int:
         """Returns the byte offset of a specific pixel position."""
         # if (row < 1) | (row > 2049) | (column < 1) | (column > 2049):
@@ -213,12 +149,16 @@ class Rip(object):
                 values = await asyncio.gather(*tasks)
                 return values
 
-    def get_pixel_timeseries(self, coordinates):
+    def get_pixel_timeseries(self, coordinates, return_errors=False):
+        if isinstance(coordinates, tuple):
+            coordinates = [coordinates]
         runs = convert_coordinates_to_runs(coordinates)
         flux, flux_err = np.vstack(
             _sync_call(self._async_get_data_per_rows, runs=runs)
         ).transpose([2, 1, 0])
-        return flux, flux_err
+        if return_errors:
+            return flux, flux_err
+        return flux
 
     async def _async_get_flux(
         self,
@@ -253,8 +193,6 @@ class Rip(object):
         shape: tuple = (20, 21),
         frame_range: Optional[tuple] = None,
     ):
-        self.corner = corner
-        self.shape = shape
         flux, flux_err = _sync_call(
             self._async_get_flux,
             start_column=corner[1],
@@ -263,172 +201,16 @@ class Rip(object):
             nrows=shape[0],
             frame_range=frame_range,
         )
-        tform = str(flux[0].size) + "E"
-        dims = str(flux[0].shape[::-1])
-
-        flux, flux_err = fits.Column(
-            name="FLUX", format=tform, dim=dims, unit="e-/s", disp="E14.7", array=flux
-        ), fits.Column(
-            name="FLUX_ERR",
-            format=tform,
-            dim=dims,
-            unit="e-/s",
-            disp="E14.7",
-            array=flux_err,
-        )
         return flux, flux_err
-
-    def get_tpf(
-        self,
-        corner: tuple = (1014, 1014),
-        shape: tuple = (20, 21),
-        frame_range: Optional[tuple] = None,
-    ):
-        flux, flux_err = self.get_flux(
-            corner=corner, shape=shape, frame_range=frame_range
-        )
-
-        cols = [
-            self.time,
-            self.timecorr,
-            self.cadence_number,
-            self.quality,
-            flux,
-            flux_err,
-        ]
-
-        table_hdu = fits.BinTableHDU.from_columns(cols)
-        table_hdu.header["EXTNAME"] = "PIXELS"
-
-        aperture_hdu = fits.ImageHDU(data=np.ones(shape))
-        aperture_hdu.header["EXTNAME"] = "APERTURE"
-        for kwd, val, cmt in self.wcs.to_header(relax=True).cards:
-            aperture_hdu.header.set(kwd, val, cmt)
-
-        # Adding extra aperture keywords (TESS specific)
-        aperture_hdu.header.set(
-            "NPIXMISS", None, "Number of op. aperture pixels not collected"
-        )
-        aperture_hdu.header.set("NPIXSAP", None, "Number of pixels in optimal aperture")
-        # Need to fix NAXIS in primary hdu
-        hdulist = fits.HDUList([self.primary_hdu, table_hdu, aperture_hdu])
-        return hdulist
-
-    @property
-    def time(self):
-        return fits.Column(
-            name="TIME",
-            format="D",
-            unit="BJD - 2457000, days",
-            disp="D14.7",
-            array=(self.last_hdu.data["TSTART"] + self.last_hdu.data["TSTOP"]) / 2,
-        )
-
-    @property
-    def timecorr(self):
-        return fits.Column(
-            name="TIMECORR",
-            format="E",
-            unit="d",
-            disp="E14.7",
-            array=self.last_hdu.data["BARYCORR"],
-        )
-
-    @property
-    def quality(self):
-        return fits.Column(
-            name="QUALITY",
-            format="J",
-            disp="B16.16",
-            array=self.last_hdu.data["DQUALITY"],
-        )
-
-    @property
-    def n_frames(self):
-        return fits.Column(
-            name="NUM_FRM",
-            format="I",
-            array=self.last_hdu.data["NUM_FRM"],
-        )
-
-    @property
-    def cadence_number(self):
-        cadence_number = np.cumsum(
-            np.round(
-                np.diff(self.last_hdu.data["TSTART"])
-                / np.median(self.last_hdu.data["TELAPSE"])
-            ).astype(int)
-        )
-        return fits.Column(name="CADENCENO", format="I", array=cadence_number)
-
-    @property
-    def wcs(self):
-        return _extract_average_WCS(self.last_hdu)
-
-    def _save_wcss(self, dir=None):
-        if dir is None:
-            dir = f"{PACKAGEDIR}/data/s{self.sector:04}/"
-        os.makedirs(dir, exist_ok=True)
-        hdu = self.last_hdu
-        wcs_dict = {
-            attr: hdu.data[attr].tolist()
-            if isinstance(hdu.data[attr][0], (float, np.integer, int))
-            else hdu.data[attr][0]
-            for attr in WCS_ATTRS(hdu)
-        }
-        wcs_dict = convert_to_native_types(wcs_dict)
-        filename = f"{dir}TESS_wcs_sector{self.sector:04}_cam{self.camera}_ccd{self.ccd}.json.bz2"
-        wcs_dict["CTYPE1"] = "RA---TAN-SIP"
-        wcs_dict["CTYPE2"] = "DEC--TAN-SIP"
-        json_data = json.dumps(wcs_dict)
-        with bz2.open(filename, "wt", encoding="utf-8") as f:
-            f.write(json_data)
-
-    def _load_wcss(self, dir=None):
-        if dir is None:
-            dir = f"{PACKAGEDIR}/data/s{self.sector:04}/"
-        filename = f"{dir}TESS_wcs_sector{self.sector:04}_cam{self.camera}_ccd{self.ccd}.json.bz2"
-        if not os.path.isfile(filename):
-            self._save_wcss()
-        with bz2.open(filename, "rt", encoding="utf-8") as f:
-            loaded_dict = json.load(f)
-        wcs_attrs = WCS_ATTRS(self.last_hdu)
-        hdr = fits.PrimaryHDU().header
-
-        def _get_wcs(idx):
-            wcs_dict = {
-                attr: loaded_dict[attr]
-                if (not isinstance(loaded_dict[attr], list))
-                else loaded_dict[attr][idx]
-                for attr in wcs_attrs
-            }
-            for attr in wcs_attrs:
-                if not isinstance(loaded_dict[attr], list):
-                    hdr[attr] = loaded_dict[attr]
-                else:
-                    if not np.isfinite(loaded_dict[attr][idx]):
-                        return None
-                    hdr[attr] = loaded_dict[attr][idx]
-            return WCS(wcs_dict, relax=True)
-
-        return {idx: _get_wcs(idx) for idx in range(self.nframes)}
-
-    @lru_cache(maxsize=128)
-    def _wcss(self):
-        return self._load_wcss()
-
-    @property
-    def wcss(self):
-        return self._wcss()
 
 
 @lru_cache()
-def _primary_hdu(object_key):
+def get_primary_hdu(object_key):
     return _fix_primary_hdu(_sync_call(async_get_primary_hdu, object_key=object_key))
 
 
 @lru_cache()
-def _last_hdu(object_key, end):
+def get_last_hdu(object_key, end):
     return _sync_call(async_get_last_hdu, object_key=object_key, end=end)
 
 
@@ -479,3 +261,21 @@ async def async_get_last_hdu(object_key, end):
             ignore_missing_simple=True,
             lazy_load_hdus=False,
         )[0]
+
+
+async def async_get_ffi(ffi_name):
+    date, sector_str, camera, ccd, _, _ = ffi_name[4:].split("-")
+    object_key = (
+        f"tess/public/ffi/{sector_str}/{date[:4]}/{date[4:7]}/{camera}-{ccd}/{ffi_name}"
+    )
+    async with get_session().create_client(
+        "s3", config=Config(signature_version=UNSIGNED)
+    ) as s3:
+        # Retrieve the cube header
+        response = await s3.get_object(Bucket=BUCKET_NAME, Key=object_key)
+        data_bytes = await response["Body"].read()
+        return fits.open(
+            BytesIO(data_bytes),
+            ignore_missing_simple=True,
+            lazy_load_hdus=False,
+        )

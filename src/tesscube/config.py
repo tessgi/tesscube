@@ -1,9 +1,7 @@
 import configparser
 import os
 
-from . import _package_cache_dir, get_logger
-
-log = get_logger()
+from . import _package_cache_dir, log
 
 CONFIG_FILE_PATH = os.path.join(_package_cache_dir, "config.ini")
 

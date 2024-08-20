@@ -1,4 +1,4 @@
-__version__ = "0.1.0dev"
+__version__ = "1.0.0dev"
 # Standard library
 import os  # noqa
 import tempfile
@@ -59,13 +59,13 @@ def check_package_cache_dir(package_cache_dir):
 
 
 _package_cache_dir = check_package_cache_dir(
-    os.path.join(os.path.expanduser("~"), ".tessrip")
+    os.path.join(os.path.expanduser("~"), ".tesscube")
 )
+
+log = get_logger()
 
 # Make sure we can load the config
 from .config import load_config  # noqa
 
 load_config()
-
-from .query import Rip  # noqa
-from .utils import get_FFI  # noqa
+from .cube import TESSCube  # noqa
