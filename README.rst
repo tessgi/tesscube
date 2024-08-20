@@ -1,5 +1,5 @@
-.. image:: <https://github.com/lightkurve/tesscube/actions/workflows/python-app.yml/badge.svg>
-    :target: <https://github.com/lightkurve/tesscube/actions/workflows/python-app.yml>
+.. image:: <https://github.com/tessgi/tesscube/actions/workflows/python-app.yml/badge.svg>
+    :target: <https://github.com/tessgi/tesscube/actions/workflows/python-app.yml>
     :alt: Test status
 
 .. image:: <https://badge.fury.io/py/tesscube.svg>
@@ -7,7 +7,7 @@
     :alt: PyPI version
 
 .. image:: <https://img.shields.io/badge/documentation-live-blue.svg>
-    :target: <https://lightkurve.github.io/tesscube/>
+    :target: <https://tessgi.github.io/tesscube/>
     :alt: Documentation
 
 ########
@@ -134,7 +134,7 @@ Both will return an `astropy.fits.HDUList`, with a file format similar to the of
 Contributing
 ============
 
-``tescube``  is an open-source, community driven package. 
+``tesscube``  is an open-source, community driven package. 
 We welcome users to contribute and develop new features for lksearch.  
 
 For further information, please see the `Lightkurve Community guidelines <https://docs.lightkurve.org/development/contributing.html>`_.
@@ -165,7 +165,7 @@ The best way to contact us is to `open an issue`_ or to e-mail tesshelp@bigbang.
   
 Please include a self-contained example that fully demonstrates your problem or question.
   .. _`TESS Science Support Center`: https://heasarc.gsfc.nasa.gov/docs/tess/
-  .. _`open an issue`: https://github.com/lightkurve/tesscube/issues/new
+  .. _`open an issue`: https://github.com/tessgi/tesscube/issues/new
 
 
 .. <!-- Contact content end -->
