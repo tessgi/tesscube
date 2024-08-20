@@ -123,10 +123,10 @@ class TESSCube(QueryMixin, WCSMixin):
                     f"Target {target} not in Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}."
                 )
             corner = (
-                np.asarray(self.wcs.world_to_pixel(target)) - np.asarray(shape) // 2
+                np.asarray(self.wcs.world_to_pixel(target))[::-1] - np.asarray(shape) // 2
             )
             corner = np.floor(corner).astype(int)
-            corner = (corner[1] + 1, corner[0] + 1)
+            corner = (corner[0] + 1, corner[1] + 1)
         else:
             raise ValueError("Pass an origin coordinate or a SkyCoord object")
 
@@ -193,8 +193,13 @@ class TESSCube(QueryMixin, WCSMixin):
                 ]
             )
             mask = np.in1d(cadenceno, idxs)
-            time = time[mask][::frame_bin]
-            timecorr = timecorr[mask][::frame_bin]
+            time = (self.last_hdu.data['tstop'][k][mask][::frame_bin] + self.last_hdu.data['tstart'][k][mask][(frame_bin-1)::frame_bin])/2
+            timecorr = np.nanmean(
+                        np.asarray(
+                            [timecorr[mask][idx::frame_bin] for idx in range(frame_bin)]
+                        ),
+                        axis=0,
+                    )
             cadenceno = cadenceno[mask][::frame_bin]
             quality = np.bitwise_or.reduce(
                 np.asarray([quality[mask][idx::frame_bin] for idx in range(frame_bin)]),
