@@ -50,6 +50,7 @@ Load an FFI cube
 You can work with an FFI cube by loading it using a sector, camera, and CCD number.
 
 .. code-block:: python
+
   from tesscube import TESSCube
   cube = TESSCube(sector=1, camera=1, ccd=4)
 
@@ -60,6 +61,7 @@ Obtain an FFI Using `tesscube`
 You can obtain an FFI image by indexing into a cube
 
 .. code-block:: python
+
   from tesscube import TESSCube
   cube = TESSCube(sector=1, camera=1, ccd=4)
   ffi = cube[300]
@@ -73,6 +75,7 @@ Obtain a TPF
 You can obtain a TPF in two ways, either you can either pass a pixel position
 
 .. code-block:: python
+
   from tesscube import TESSCube
   from astropy.coordinates import SkyCoord
   corner = (1282, 1750)
@@ -82,6 +85,7 @@ You can obtain a TPF in two ways, either you can either pass a pixel position
 Or you can pass an astropy SkyCoord object containing the RA and Dec of the target
 
 .. code-block:: python
+
   from tesscube import TESSCube
   from astropy.coordinates import SkyCoord
   coord = SkyCoord.from_name("AU Mic")
@@ -91,6 +95,7 @@ Or you can pass an astropy SkyCoord object containing the RA and Dec of the targ
 Alternatively, you can index into the cube like so:
 
 .. code-block:: python
+
   from tesscube import TESSCube
   cube = TESSCube(sector=1, camera=1, ccd=4)
   tpf = cube[:, 401:410, 503:510]
@@ -103,6 +108,7 @@ Obtain a lower time resolution TPF
 You can obtain a lower time resolution by either passing in a `frame_bin` parameter, which will downsample the resultant TPF,
 
 .. code-block:: python
+
   from tesscube import TESSCube
   from astropy.coordinates import SkyCoord
   corner = (1282, 1750)
@@ -113,6 +119,7 @@ Or you can slice the cube, which will return a downsampled TPF
 
 
 .. code-block:: python
+  
   from tesscube import TESSCube
   cube = TESSCube(sector=1, camera=1, ccd=4)
   tpf = cube[::10, 401:410, 503:510]
