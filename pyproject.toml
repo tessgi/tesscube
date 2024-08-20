@@ -16,6 +16,7 @@ asyncio = "^3.4.3"
 aiobotocore = "^2.7.0"
 rich = "^13.7.0"
 astropy = "^5.3.4"
+nest-asyncio = "^1.5.8"
 
 [tool.poetry.group.dev]
 optional = true
@@ -25,17 +26,19 @@ jupyterlab = "^4.0.8"
 matplotlib = "^3.8.1"
 nest-asyncio = "^1.5.8"
 pytest = "^7.4.3"
-black = "^23.11.0"
-isort = "^5.12.0"
 fbpca = "^1.0"
 scipy = "^1.11.3"
 tqdm = "^4.66.1"
-mkdocs = "^1.5.3"
-mkdocstrings = "^0.24.0"
 ipywidgets = "^8.1.2"
 astrocut = "^0.11.0"
 lksearch = "^1.0.0"
-
+nbsphinx = "^0.9.3"
+sphinx = "^7.3.7"
+sphinx_rtd_theme = "^2.0.0"
+sphinx_astropy = "^1.9.1"
+sphinx_automodapi = "^0.17.0"
+pydata-sphinx-theme = "^0.15.4"
+ruff = "^0.5.2"
 
 [build-system]
 requires = ["poetry-core"]

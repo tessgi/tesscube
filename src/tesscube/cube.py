@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import Optional, Union
+from typing import Optional, Union, Dict
 
 import numpy as np
 from astropy.coordinates import SkyCoord
@@ -8,18 +8,34 @@ from astropy.time import Time
 from astropy.wcs.utils import fit_wcs_from_points
 
 from . import BYTES_PER_PIX, DATA_OFFSET, log
-from .fits import (get_header_dict, get_output_first_extention_header,
-                   get_output_primary_hdu, get_output_second_extension_header,
-                   get_wcs_header_by_extension)
+from .fits import (
+    get_header_dict,
+    get_output_first_extention_header,
+    get_output_primary_hdu,
+    get_output_second_extension_header,
+    get_wcs_header_by_extension,
+)
 from .query import QueryMixin, async_get_ffi, get_last_hdu, get_primary_hdu
 from .utils import _sync_call
 from .wcs import WCSMixin
 
 
 class TESSCube(QueryMixin, WCSMixin):
-    """Cube object to obtain portions of TESS data cube from MASTs AWS bucket
+    """
+    A class to obtain portions of TESS data cubes from MAST's AWS bucket.
 
-    This object will grab particular bytes out of the TESS data cubes to try to make obtaining data from the cubes efficient.
+    This class provides methods to efficiently retrieve specific portions
+    of TESS (Transiting Exoplanet Survey Satellite) FFI data cubes, enabling
+    users to extract and analyze the desired segments of data.
+
+    Parameters
+    ----------
+    sector : int
+        The TESS observation sector number.
+    camera : int
+        The camera number (1-4).
+    ccd : int
+        The CCD number (1-4).
     """
 
     def __init__(self, sector: int, camera: int, ccd: int):
@@ -41,12 +57,37 @@ class TESSCube(QueryMixin, WCSMixin):
         return f"TESSCube [Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}]"
 
     @property
-    def header_dict(self):
-        """Get the header keywords from the MAST cube."""
+    def header_dict(self) -> Dict:
+        """
+        Get the header keywords from the MAST cube.
+
+        Returns
+        -------
+        dict
+            A dictionary of header keywords from the MAST cube.
+        """
         return get_header_dict(self)
 
     @staticmethod
     def from_skycoord(coord: SkyCoord, sector: int):
+        """
+        Create a TESSCube object from a SkyCoord object.
+
+        This method identifies the appropriate TESS cube that contains the
+        given SkyCoord and returns a TESSCube object.
+
+        Parameters
+        ----------
+        coord : SkyCoord
+            The celestial coordinates of the target.
+        sector : int
+            The TESS observation sector number.
+
+        Returns
+        -------
+        TESSCube
+            The TESSCube object containing the specified coordinates.
+        """
         # Grabs a cube given a SkyCoord by querying the WCS.
         for camera in np.arange(1, 5):
             for ccd in np.arange(1, 5):
@@ -55,21 +96,13 @@ class TESSCube(QueryMixin, WCSMixin):
                     return cube
 
     @property
-    def center(self):
-        if hasattr(self, "corner"):
-            return (
-                self.corner[0] + self.shape[0] / 2,
-                self.corner[1] + self.shape[1] / 2,
-            )
-        else:
-            raise ValueError("Run `get_flux` to specify a region.")
-
-    @property
     def primary_hdu(self):
+        """The primary HDU of the cube file."""
         return get_primary_hdu(object_key=self.object_key)
 
     @property
     def last_hdu(self):
+        """The last HDU of the cube file."""
         end = (
             DATA_OFFSET
             + (self.ncolumns * self.nframes * self.nsets * self.nrows) * BYTES_PER_PIX
@@ -78,12 +111,39 @@ class TESSCube(QueryMixin, WCSMixin):
 
     @property
     def ffi_names(self):
+        """The FFI names used to make the cube."""
         return list(self.last_hdu.data["FFI_FILE"])
 
     @lru_cache(maxsize=4)
     def get_ffi(
-        self, index: int = None, time: Time = None, ffi_name: str = None, raw=False
-    ):
+        self,
+        index: Optional[int] = None,
+        time: Optional[Time] = None,
+        ffi_name: Optional[str] = None,
+        raw: bool = False,
+    ) -> fits.HDUList:
+        """
+        Retrieve a Full-Frame Image (FFI) from the data cube.
+
+        One of `time`, `index`, or `ffi_name` must be provided to identify the FFI.
+        This method caches up to 4 FFIs for efficient reuse.
+
+        Parameters
+        ----------
+        index : int, optional
+            The index of the FFI to retrieve.
+        time : astropy.time.Time, optional
+            The time at which the FFI was captured.
+        ffi_name : str, optional
+            The name of the FFI file.
+        raw : bool, optional
+            Whether to retrieve the raw FFI (default is False).
+
+        Returns
+        -------
+        astropy.io.fits.HDUList
+            The HDUList containing the FFI data.
+        """
         provided_args = [arg is not None for arg in (time, index, ffi_name)]
         if sum(provided_args) != 1:
             raise ValueError(
@@ -113,7 +173,30 @@ class TESSCube(QueryMixin, WCSMixin):
         shape: tuple = (20, 21),
         frame_range: Optional[tuple] = None,
         frame_bin: int = 1,
-    ):
+    ) -> fits.HDUList:
+        """
+        Retrieve a Target Pixel File (TPF) from the data cube.
+
+        The TPF contains the flux data for a specific target region, defined by
+        either pixel coordinates or a SkyCoord object. The data can be binned
+        over multiple frames (cadences) using `frame_bin`.
+
+        Parameters
+        ----------
+        target : tuple or SkyCoord, optional
+            The (row, column) coordinates or a SkyCoord object for the target region.
+        shape : tuple of int, optional
+            The (number of rows, number of columns) shape of the target region.
+        frame_range : tuple of int, optional
+            The (start, end) frame range to retrieve the data.
+        frame_bin : int, optional
+            The number of frames to bin together (default is 1, i.e. no binning).
+
+        Returns
+        -------
+        astropy.io.fits.HDUList
+            The HDUList containing the TPF data.
+        """
         if isinstance(target, tuple):
             corner = target
             target = SkyCoord(*self.wcs.all_pix2world([corner], 0)[0], unit="deg")
@@ -123,7 +206,8 @@ class TESSCube(QueryMixin, WCSMixin):
                     f"Target {target} not in Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}."
                 )
             corner = (
-                np.asarray(self.wcs.world_to_pixel(target))[::-1] - np.asarray(shape) // 2
+                np.asarray(self.wcs.world_to_pixel(target))[::-1]
+                - np.asarray(shape) // 2
             )
             corner = np.floor(corner).astype(int)
             corner = (corner[0] + 1, corner[1] + 1)
@@ -193,13 +277,16 @@ class TESSCube(QueryMixin, WCSMixin):
                 ]
             )
             mask = np.in1d(cadenceno, idxs)
-            time = (self.last_hdu.data['tstop'][k][mask][::frame_bin] + self.last_hdu.data['tstart'][k][mask][(frame_bin-1)::frame_bin])/2
+            time = (
+                self.last_hdu.data["tstop"][k][mask][::frame_bin]
+                + self.last_hdu.data["tstart"][k][mask][(frame_bin - 1) :: frame_bin]
+            ) / 2
             timecorr = np.nanmean(
-                        np.asarray(
-                            [timecorr[mask][idx::frame_bin] for idx in range(frame_bin)]
-                        ),
-                        axis=0,
-                    )
+                np.asarray(
+                    [timecorr[mask][idx::frame_bin] for idx in range(frame_bin)]
+                ),
+                axis=0,
+            )
             cadenceno = cadenceno[mask][::frame_bin]
             quality = np.bitwise_or.reduce(
                 np.asarray([quality[mask][idx::frame_bin] for idx in range(frame_bin)]),
@@ -351,18 +438,22 @@ class TESSCube(QueryMixin, WCSMixin):
 
     @property
     def time(self):
+        """Time of the frames in BTJD. Note this is the time at the center of the FFI."""
         return (self.last_hdu.data["TSTART"] + self.last_hdu.data["TSTOP"]) / 2
 
     @property
     def timecorr(self):
+        """Barycentric time correction for the center of the FFI."""
         return self.last_hdu.data["BARYCORR"]
 
     @property
     def quality(self):
+        """SPOC provided quality flags for each cadence."""
         return self.last_hdu.data["DQUALITY"]
 
     @property
     def cadence_number(self):
+        """Cadence number for each frame. Note this is not the same as the SPOC provided cadence numbers."""
         cadence_number = np.cumsum(
             np.round(
                 np.diff(self.last_hdu.data["TSTART"])
@@ -373,6 +464,7 @@ class TESSCube(QueryMixin, WCSMixin):
 
     @property
     def exposure_time(self):
+        """Exposure time in days"""
         return self.last_hdu.data["EXPOSURE"][0]
 
     @property

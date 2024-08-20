@@ -20,9 +20,8 @@ tesscube
 
 ``tesscube`` works with data that is available in the cloud, and will return TESS data in formats similar to the NASA TESS official mission products. You do not need any login credentials to use `tesscube`, and can use this tool by pip installing either on your local machine or in the cloud.
 
-.. admonition:: Data formats
+.. note:: Data formats
   `tesscube` will return `astropy` native objects, including `astropy.fits.HDUList` objects, and `astropy.wcs.WCS` objects. You can work with these directly, or load them into `lightkurve`.
-
 
 .. <!-- intro content end -->
 
@@ -157,11 +156,10 @@ Contact
 ``tesscube`` is an open source community project created by the `TESS Science Support Center`_. 
 The best way to contact us is to `open an issue`_ or to e-mail tesshelp@bigbang.gsfc.nasa.gov.
   
+Please include a self-contained example that fully demonstrates your problem or question.
   .. _`TESS Science Support Center`: https://heasarc.gsfc.nasa.gov/docs/tess/
-  
   .. _`open an issue`: https://github.com/lightkurve/tesscube/issues/new
 
-Please include a self-contained example that fully demonstrates your problem or question.
 
 .. <!-- Contact content end -->
 

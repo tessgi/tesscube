@@ -3,6 +3,7 @@ import pytest
 from tesscube import TESSCube
 from tesscube.query import get_last_hdu
 
+
 # This test needs to be run first!
 @pytest.mark.remote_data
 def test_caching():

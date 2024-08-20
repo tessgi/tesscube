@@ -1,4 +1,5 @@
 """Tools to work with WCS"""
+
 import bz2
 import json
 import os
@@ -59,20 +60,20 @@ def _extract_average_WCS(hdu):
     return WCS(wcs_hdu.header)
 
 
-def _extract_all_WCS(hdu):
-    """Extract all the WCSs from a TableHDU from the TESS cube"""
-    wcss = []
-    for idx in np.arange(len(hdu.data["CRPIX1"])):
-        try:
-            wcs_hdu = fits.PrimaryHDU()
-            for attr in WCS_ATTRS(hdu):
-                wcs_hdu.header[attr] = hdu[0].data[attr][idx]
-            wcs_hdu.header["WCSAXES"] = int(wcs_hdu.header["WCSAXES"])
-            wcs_hdu.header["WCSAXESP"] = int(wcs_hdu.header["WCSAXESP"])
-            wcss.append(WCS(wcs_hdu.header))
-        except:
-            wcss.append(None)
-    return wcss
+# def _extract_all_WCS(hdu):
+#     """Extract all the WCSs from a TableHDU from the TESS cube"""
+#     wcss = []
+#     for idx in np.arange(len(hdu.data["CRPIX1"])):
+#         try:
+#             wcs_hdu = fits.PrimaryHDU()
+#             for attr in WCS_ATTRS(hdu):
+#                 wcs_hdu.header[attr] = hdu[0].data[attr][idx]
+#             wcs_hdu.header["WCSAXES"] = int(wcs_hdu.header["WCSAXES"])
+#             wcs_hdu.header["WCSAXESP"] = int(wcs_hdu.header["WCSAXESP"])
+#             wcss.append(WCS(wcs_hdu.header))
+#         except:
+#             wcss.append(None)
+#     return wcss
 
 
 class WCSMixin:

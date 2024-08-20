@@ -5,27 +5,12 @@ PYMODULE:=src
 TESTS:=tests
 
 # Run all the checks which do not change files
-all: isort black flake8 pytest
+all: ruff pytest
 
 # Run the unit tests using `pytest`
 pytest:
 	$(CMD) pytest $(PYMODULE) $(TESTS)
 
-# Lint the code using `flake8`
-flake8:
-	$(CMD) flake8 $(PYMODULE) $(TESTS)
-
-# Automatically format the code using `black`
-black:
-	$(CMD) black $(PYMODULE) $(TESTS)
-
-# Order the imports using `isort`
-isort:
-	$(CMD) isort $(PYMODULE) $(TESTS)
-
-# Serve docs
-serve:
-	$(CMD) mkdocs serve
-
-deploy:
-	$(CMD) mkdocs gh-deploy --force
+# run ruff linter
+ruff:
+	$(CMD) ruff format --check $(PYMODULE) $(TESTS)
