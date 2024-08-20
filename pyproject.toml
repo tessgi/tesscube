@@ -4,7 +4,7 @@ version = "1.0.0dev"
 description = ""
 authors = ["TESS Science Support Center <tesshelp@bigbang.gsfc.nasa.gov>", "Christina Hedges <christina.l.hedges@nasa.gov>"]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 packages = [{include = "tesscube", from = "src"}]
 
 [tool.poetry.dependencies]
