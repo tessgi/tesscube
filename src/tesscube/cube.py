@@ -1,4 +1,4 @@
-from functools import lru_cache
+from functools import lru_cache, cached_property
 from typing import Optional, Union, Dict
 
 import numpy as np
@@ -64,7 +64,7 @@ class TESSCube(QueryMixin, WCSMixin):
     def __repr__(self):
         return f"TESSCube [Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}]"
 
-    @property
+    @cached_property
     def header_dict(self) -> Dict:
         """
         Get the header keywords from the MAST cube.
@@ -103,12 +103,12 @@ class TESSCube(QueryMixin, WCSMixin):
                 if cube.wcs.footprint_contains(coord):
                     return cube
 
-    @property
+    @cached_property
     def primary_hdu(self):
         """The primary HDU of the cube file."""
         return get_primary_hdu(object_key=self.object_key)
 
-    @property
+    @cached_property
     def last_hdu(self):
         """The last HDU of the cube file."""
         end = (
@@ -117,10 +117,22 @@ class TESSCube(QueryMixin, WCSMixin):
         )
         return get_last_hdu(object_key=self.object_key, end=end)
 
-    @property
+    @cached_property
     def ffi_names(self):
         """The FFI names used to make the cube."""
         return list(self.last_hdu.data["FFI_FILE"])
+
+    @cached_property
+    def tstart(self):
+        return self.last_hdu.data["TSTART"]
+
+    @cached_property
+    def tstop(self):
+        return self.last_hdu.data["TSTOP"]
+
+    @cached_property
+    def telapse(self):
+        return self.last_hdu.data["TELAPSE"]
 
     @lru_cache(maxsize=4)
     def get_ffi(
@@ -159,8 +171,8 @@ class TESSCube(QueryMixin, WCSMixin):
             )
 
         if time is not None:
-            start = Time(self.last_hdu.data["TSTART"] + 2457000, format="jd")
-            end = Time(self.last_hdu.data["TSTART"] + 2457000, format="jd")
+            start = Time(self.tstart + 2457000, format="jd")
+            end = Time(self.tstop + 2457000, format="jd")
             t = Time.now()
             t = Time(2459343.87182313, format="jd")
             if not ((t > start).any() & (t < end).any()):
@@ -296,8 +308,8 @@ class TESSCube(QueryMixin, WCSMixin):
             )
             mask = np.in1d(cadenceno, idxs)
             time = (
-                self.last_hdu.data["tstop"][k][mask][::frame_bin]
-                + self.last_hdu.data["tstart"][k][mask][(frame_bin - 1) :: frame_bin]
+                self.tstop[k][mask][::frame_bin]
+                + self.tstart[k][mask][(frame_bin - 1) :: frame_bin]
             ) / 2
             timecorr = np.nanmean(
                 np.asarray(
@@ -454,33 +466,30 @@ class TESSCube(QueryMixin, WCSMixin):
         hdulist = fits.HDUList([self.output_primary_ext, table_hdu, aperture_hdu])
         return hdulist
 
-    @property
+    @cached_property
     def time(self):
         """Time of the frames in BTJD. Note this is the time at the center of the FFI."""
-        return (self.last_hdu.data["TSTART"] + self.last_hdu.data["TSTOP"]) / 2
+        return (self.tstart + self.tstop) / 2
 
-    @property
+    @cached_property
     def timecorr(self):
         """Barycentric time correction for the center of the FFI."""
         return self.last_hdu.data["BARYCORR"]
 
-    @property
+    @cached_property
     def quality(self):
         """SPOC provided quality flags for each cadence."""
         return self.last_hdu.data["DQUALITY"]
 
-    @property
+    @cached_property
     def cadence_number(self):
         """Cadence number for each frame. Note this is not the same as the SPOC provided cadence numbers."""
         cadence_number = np.cumsum(
-            np.round(
-                np.diff(self.last_hdu.data["TSTART"])
-                / np.median(self.last_hdu.data["TELAPSE"])
-            ).astype(int)
+            np.round(np.diff(self.tstop) / np.median(self.telapse)).astype(int)
         )
         return np.hstack([cadence_number, cadence_number[-1] + 1])
 
-    @property
+    @cached_property
     def exposure_time(self):
         """Exposure time in days"""
         return self.last_hdu.data["EXPOSURE"][0]

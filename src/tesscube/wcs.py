@@ -3,7 +3,7 @@
 import bz2
 import json
 import os
-from functools import lru_cache
+from functools import lru_cache, cached_property
 
 import numpy as np
 from astropy.io import fits
@@ -80,7 +80,7 @@ def _extract_average_WCS(hdu):
 class WCSMixin:
     """Mixins to use the WCS"""
 
-    @property
+    @cached_property
     def wcs(self):
         return _extract_average_WCS(self.last_hdu)
 
