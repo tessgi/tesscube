@@ -32,7 +32,7 @@ WCS_ATTRS_STARTS = [
 
 
 def WCS_ATTRS(hdu, sip=True):
-    return np.hstack(
+    wcs_attrs = np.hstack(
         [
             *[
                 [key for key in hdu.header.keys() if key.startswith(keystart)]
@@ -40,6 +40,7 @@ def WCS_ATTRS(hdu, sip=True):
             ],
         ]
     ).tolist()
+    return wcs_attrs
 
 
 def _extract_average_WCS(hdu):
@@ -141,30 +142,36 @@ class WCSMixin:
 
     def get_poscorr(self, coord):
         hdu = self.last_hdu
+        crval1, crval2 = np.asarray(hdu.data["CRVAL1"]), np.asarray(hdu.data["CRVAL2"])
+        cd1_1, cd2_1, cd1_2, cd2_2 = (
+            np.asarray(hdu.data["CD1_1"]),
+            np.asarray(hdu.data["CD2_1"]),
+            np.asarray(hdu.data["CD1_2"]),
+            np.asarray(hdu.data["CD2_2"]),
+        )
+        ra, dec = coord.ra.deg, coord.dec.deg
+
         wcs0 = WCS(
             {
                 attr: hdu.data[attr][0]
                 if isinstance(hdu.data[attr][0], str)
-                else np.nan_to_num(hdu.data[attr][0])
-                for attr in WCS_ATTRS(hdu, sip=False)
+                else np.nanmedian(hdu.data[attr])
+                for attr in self.wcs_attrs_no_sip
             }
         )
+        pos_corr1_0, pos_corr2_0 = wcs0.wcs_world2pix([(ra, dec)], 0)[0]
+
         pos_corr1, pos_corr2 = np.zeros((2, len(self))) * np.nan
         for idx in range(self.shape[0]):
-            crval = np.asarray([hdu.data["CRVAL1"][idx], hdu.data["CRVAL2"][idx]])
+            crval = np.asarray([crval1[idx], crval2[idx]])
             cd = np.asarray(
                 [
-                    [hdu.data["CD1_1"][idx], hdu.data["CD2_1"][idx]],
-                    [hdu.data["CD1_2"][idx], hdu.data["CD2_2"][idx]],
+                    [cd1_1[idx], cd2_1[idx]],
+                    [cd1_2[idx], cd2_2[idx]],
                 ]
             ).T
             if np.isfinite(cd).all() & np.isfinite(crval).all():
                 wcs0.wcs.crval = crval
                 wcs0.wcs.cd = cd
-                pos_corr1[idx], pos_corr2[idx] = wcs0.wcs_world2pix(
-                    [(coord.ra.deg, coord.dec.deg)], 0
-                )[0]
-        pos_corr1_0, pos_corr2_0 = self.wcs.wcs_world2pix(
-            [(coord.ra.deg, coord.dec.deg)], 0
-        )[0]
+                pos_corr1[idx], pos_corr2[idx] = wcs0.wcs_world2pix([(ra, dec)], 0)[0]
         return pos_corr1 - pos_corr1_0, pos_corr2 - pos_corr2_0

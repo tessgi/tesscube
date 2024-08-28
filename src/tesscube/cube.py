@@ -17,7 +17,7 @@ from .fits import (
 )
 from .query import QueryMixin, async_get_ffi, get_last_hdu, get_primary_hdu
 from .utils import _sync_call, validate_tuple
-from .wcs import WCSMixin
+from .wcs import WCSMixin, WCS_ATTRS
 
 
 class TESSCube(QueryMixin, WCSMixin):
@@ -56,6 +56,10 @@ class TESSCube(QueryMixin, WCSMixin):
         self.output_primary_ext = get_output_primary_hdu(self)
         self.output_first_header = get_output_first_extention_header(self)
         self.output_secondary_header = get_output_second_extension_header(self)
+        self.wcs_attrs_no_sip = WCS_ATTRS(self.last_hdu, sip=False)
+        self.wcs_attrs_no_sip = list(
+            set(self.wcs_attrs_no_sip) - set(["WCSAXES", "WCSAXESP"])
+        )
 
     def __repr__(self):
         return f"TESSCube [Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}]"
@@ -209,7 +213,8 @@ class TESSCube(QueryMixin, WCSMixin):
         """
         if isinstance(target, tuple):
             corner = validate_tuple(target)
-            target = SkyCoord(*self.wcs.all_pix2world([corner], 0)[0], unit="deg")
+            if calculate_poscorr:
+                target = SkyCoord(*self.wcs.all_pix2world([corner], 0)[0], unit="deg")
         elif isinstance(target, SkyCoord):
             if not self.wcs.footprint_contains(target):
                 raise ValueError(
