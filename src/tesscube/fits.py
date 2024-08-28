@@ -120,9 +120,8 @@ def get_output_primary_hdu(cube):
         "CRBLKSZ",
         "CRSPOC",
     ]
-    return fits.PrimaryHDU(
-        header=fits.Header(cards=[cube.header_dict[key] for key in keys])
-    )
+    header_dict = cube.header_dict
+    return fits.PrimaryHDU(header=fits.Header(cards=[header_dict[key] for key in keys]))
 
 
 def get_output_first_extention_header(cube):
@@ -175,7 +174,8 @@ def get_output_first_extention_header(cube):
         "MEANBLCC",
         "MEANBLCD",
     ]
-    return fits.Header(cards=[cube.header_dict[key] for key in keys])
+    header_dict = cube.header_dict
+    return fits.Header(cards=[header_dict[key] for key in keys])
 
 
 def get_output_second_extension_header(cube):
@@ -190,7 +190,8 @@ def get_output_second_extension_header(cube):
         "DEC_OBJ",
         "EQUINOX",
     ]
-    return fits.Header(cards=[cube.header_dict[key] for key in keys])
+    header_dict = cube.header_dict
+    return fits.Header(cards=[header_dict[key] for key in keys])
 
 
 def get_wcs_header_by_extension(wcs_header, ext=5):
