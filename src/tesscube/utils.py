@@ -9,6 +9,12 @@ import numpy as np
 from . import log
 
 
+def validate_tuple(t: tuple):
+    if not len(t) == 2:
+        raise ValueError("Pass a tuple with length 2.")
+    return (int(t[0]), int(t[1]))
+
+
 def convert_to_native_types(obj):
     """
     Recursively convert objects in a data structure to native Python types.

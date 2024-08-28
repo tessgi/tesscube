@@ -16,7 +16,7 @@ from .fits import (
     get_wcs_header_by_extension,
 )
 from .query import QueryMixin, async_get_ffi, get_last_hdu, get_primary_hdu
-from .utils import _sync_call
+from .utils import _sync_call, validate_tuple
 from .wcs import WCSMixin
 
 
@@ -52,6 +52,10 @@ class TESSCube(QueryMixin, WCSMixin):
             self.primary_hdu.header["NAXIS3"],
             self.primary_hdu.header["NAXIS4"],
         )
+
+        self.output_primary_ext = get_output_primary_hdu(self)
+        self.output_first_header = get_output_first_extention_header(self)
+        self.output_secondary_header = get_output_second_extension_header(self)
 
     def __repr__(self):
         return f"TESSCube [Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}]"
@@ -173,6 +177,7 @@ class TESSCube(QueryMixin, WCSMixin):
         shape: tuple = (20, 21),
         frame_range: Optional[tuple] = None,
         frame_bin: int = 1,
+        calculate_poscorr=True,
     ) -> fits.HDUList:
         """
         Retrieve a Target Pixel File (TPF) from the data cube.
@@ -191,6 +196,11 @@ class TESSCube(QueryMixin, WCSMixin):
             The (start, end) frame range to retrieve the data.
         frame_bin : int, optional
             The number of frames to bin together (default is 1, i.e. no binning).
+        calculate_poscorr : bool
+            Whether to calculate the `POS_CORR` columns. These are present in SPOC
+            data but not present in some HLSPs. This takes extra time to calculate,
+            but provides extra position information. Setting to False will result in
+            POS_CORR1 and POS_CORR2 being set to zero.
 
         Returns
         -------
@@ -198,7 +208,7 @@ class TESSCube(QueryMixin, WCSMixin):
             The HDUList containing the TPF data.
         """
         if isinstance(target, tuple):
-            corner = target
+            corner = validate_tuple(target)
             target = SkyCoord(*self.wcs.all_pix2world([corner], 0)[0], unit="deg")
         elif isinstance(target, SkyCoord):
             if not self.wcs.footprint_contains(target):
@@ -213,7 +223,7 @@ class TESSCube(QueryMixin, WCSMixin):
             corner = (corner[0] + 1, corner[1] + 1)
         else:
             raise ValueError("Pass an origin coordinate or a SkyCoord object")
-
+        shape = validate_tuple(shape)
         R, C = np.meshgrid(
             np.arange(corner[0], corner[0] + shape[0]),
             np.arange(corner[1], corner[1] + shape[1]),
@@ -250,7 +260,10 @@ class TESSCube(QueryMixin, WCSMixin):
         tform = str(flux[0].size) + "E"
         dims = str(flux[0].shape[::-1])
 
-        pos_corr1, pos_corr2 = self.get_poscorr(target)
+        if calculate_poscorr:
+            pos_corr1, pos_corr2 = self.get_poscorr(target)
+        else:
+            pos_corr1, pos_corr2 = np.zeros((2, flux.shape[0]))
 
         if frame_range is not None:
             k = np.zeros(len(self), bool)
@@ -405,7 +418,7 @@ class TESSCube(QueryMixin, WCSMixin):
             cols,
             header=fits.Header(
                 [
-                    *get_output_first_extention_header(self).cards,
+                    *self.output_first_header.cards,
                     *get_wcs_header_by_extension(wcs_header, ext=4).cards,
                     *get_wcs_header_by_extension(wcs_header, ext=5).cards,
                     *get_wcs_header_by_extension(wcs_header, ext=6).cards,
@@ -423,7 +436,7 @@ class TESSCube(QueryMixin, WCSMixin):
         aperture_hdu = fits.ImageHDU(
             data=np.ones(shape),
             header=fits.Header(
-                [*get_output_second_extension_header(self).cards, *wcs_header.cards]
+                [*self.output_secondary_header.cards, *wcs_header.cards]
             ),
         )
         aperture_hdu.header["EXTNAME"] = "APERTURE"
@@ -433,7 +446,7 @@ class TESSCube(QueryMixin, WCSMixin):
         aperture_hdu.header.set("NPIXSAP", None, "Number of pixels in optimal aperture")
 
         # Need to fix NAXIS in primary hdu
-        hdulist = fits.HDUList([get_output_primary_hdu(self), table_hdu, aperture_hdu])
+        hdulist = fits.HDUList([self.output_primary_ext, table_hdu, aperture_hdu])
         return hdulist
 
     @property
