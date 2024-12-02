@@ -175,6 +175,8 @@ Please include a self-contained example that fully demonstrates your problem or 
 Changelog:
 ==========
 
+  - Patch removes the un-needed `fitsio` dependency
   - Initial v1.0.0 release of `tesscube`.
+  
 
 .. <!-- Changelog content end -->
