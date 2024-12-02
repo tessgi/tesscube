@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tesscube"
-version = "1.0.2dev"
+version = "1.0.3"
 description = ""
 authors = ["TESS Science Support Center <tesshelp@bigbang.gsfc.nasa.gov>", "Christina Hedges <christina.l.hedges@nasa.gov>"]
 license = "MIT"
@@ -10,7 +10,6 @@ packages = [{include = "tesscube", from = "src"}]
 [tool.poetry.dependencies]
 python = "<3.13,>=3.9"
 numpy = "^1.26.1"
-fitsio = "^1.2.1"
 aiohttp = "^3.8.6"
 asyncio = "^3.4.3"
 aiobotocore = "^2.7.0"

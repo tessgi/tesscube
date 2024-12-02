@@ -1,4 +1,4 @@
-__version__ = "1.0.2dev"
+__version__ = "1.0.3"
 # Standard library
 import os  # noqa
 import tempfile
