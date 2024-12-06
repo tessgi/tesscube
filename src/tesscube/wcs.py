@@ -91,14 +91,19 @@ class WCSMixin:
         hdu = self.last_hdu
         wcs_dict = {
             attr: hdu.data[attr].tolist()
-            if isinstance(np.nanmedian(hdu.data[attr]), (float, np.integer, int))
-            else hdu.data[attr][0]
+            if isinstance(hdu.data[attr], (float, np.integer, int))
+            else hdu.data[attr]
             for attr in WCS_ATTRS(hdu)
         }
         wcs_dict = convert_to_native_types(wcs_dict)
         filename = f"{dir}TESS_wcs_sector{self.sector:04}_cam{self.camera}_ccd{self.ccd}.json.bz2"
         wcs_dict["CTYPE1"] = "RA---TAN-SIP"
         wcs_dict["CTYPE2"] = "DEC--TAN-SIP"
+        wcs_dict["CTYPE1P"] = "RAWX"
+        wcs_dict["CTYPE2P"] = "RAWy"
+        wcs_dict["CUNIT1P"] = "PIXEL"
+        wcs_dict["CUNIT2P"] = "PIXEL"
+        wcs_dict["WCSNAMEP"] = "PHYSICAL"
         json_data = json.dumps(wcs_dict)
         with bz2.open(filename, "wt", encoding="utf-8") as f:
             f.write(json_data)
@@ -107,10 +112,11 @@ class WCSMixin:
         if dir is None:
             dir = f"{PACKAGEDIR}/data/s{self.sector:04}/"
         filename = f"{dir}TESS_wcs_sector{self.sector:04}_cam{self.camera}_ccd{self.ccd}.json.bz2"
+        print(filename)
         if not os.path.isfile(filename):
             self._save_wcss()
         with bz2.open(filename, "rt", encoding="utf-8") as f:
-            loaded_dict = json.load(f)
+            loaded_dict = json.load(f) 
         wcs_attrs = WCS_ATTRS(self.last_hdu)
         hdr = fits.PrimaryHDU().header
 
