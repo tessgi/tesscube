@@ -97,6 +97,7 @@ class WCSMixin:
         }
         wcs_dict = convert_to_native_types(wcs_dict)
         filename = f"{dir}TESS_wcs_sector{self.sector:04}_cam{self.camera}_ccd{self.ccd}.json.bz2"
+        # fix these keywords, sometimes idx=0 has None solution.
         wcs_dict["CTYPE1"] = "RA---TAN-SIP"
         wcs_dict["CTYPE2"] = "DEC--TAN-SIP"
         wcs_dict["CTYPE1P"] = "RAWX"
