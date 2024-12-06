@@ -112,7 +112,6 @@ class WCSMixin:
         if dir is None:
             dir = f"{PACKAGEDIR}/data/s{self.sector:04}/"
         filename = f"{dir}TESS_wcs_sector{self.sector:04}_cam{self.camera}_ccd{self.ccd}.json.bz2"
-        print(filename)
         if not os.path.isfile(filename):
             self._save_wcss()
         with bz2.open(filename, "rt", encoding="utf-8") as f:
