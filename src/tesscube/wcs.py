@@ -100,7 +100,7 @@ class WCSMixin:
         wcs_dict["CTYPE1"] = "RA---TAN-SIP"
         wcs_dict["CTYPE2"] = "DEC--TAN-SIP"
         wcs_dict["CTYPE1P"] = "RAWX"
-        wcs_dict["CTYPE2P"] = "RAWy"
+        wcs_dict["CTYPE2P"] = "RAWY"
         wcs_dict["CUNIT1P"] = "PIXEL"
         wcs_dict["CUNIT2P"] = "PIXEL"
         wcs_dict["WCSNAMEP"] = "PHYSICAL"
