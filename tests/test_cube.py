@@ -7,4 +7,4 @@ from tesscube import TESSCube
 @pytest.mark.remote_data
 def test_caching():
     # Check that we are doing caching correctly
-    r = TESSCube(sector=1, camera=1, ccd=1)
+    TESSCube(sector=1, camera=1, ccd=1)
