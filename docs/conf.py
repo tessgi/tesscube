@@ -64,7 +64,7 @@ html_sidebars = {
 
 html_theme_options = {
     "external_links": [],
-    "github_url": "https://github.com/lightkurve/tesscube",
+    "github_url": "https://github.com/tessgi/tesscube",
 }
 
 html_title = "tesscube"
