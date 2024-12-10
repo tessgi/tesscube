@@ -116,7 +116,7 @@ class WCSMixin:
         if not os.path.isfile(filename):
             self._save_wcss()
         with bz2.open(filename, "rt", encoding="utf-8") as f:
-            loaded_dict = json.load(f) 
+            loaded_dict = json.load(f)
         wcs_attrs = WCS_ATTRS(self.last_hdu)
         hdr = fits.PrimaryHDU().header
 
