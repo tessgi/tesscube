@@ -59,23 +59,29 @@ def get_header_dict(cube):
     )
     header_dict["PROCVER"] = fits.Card("PROCVER", __version__, "software version")
     header_dict["TSTART"] = fits.Card(
-        "TSTART",
-        cube.last_hdu.data["TSTART"][0],
+        "TSTART" if not cube.tica else "STARTTJD",
+        cube.last_hdu.data["TSTART" if not cube.tica else "STARTTJD"][0],
         "observation start time in TJD of first FFI",
     )
     header_dict["TSTOP"] = fits.Card(
-        "TSTOP",
-        cube.last_hdu.data["TSTOP"][-1],
+        "TSTOP" if not cube.tica else "ENDTJD",
+        cube.last_hdu.data["TSTOP" if not cube.tica else "ENDTJD"][-1],
         "observation stop time in TJD of last FFI",
     )
     header_dict["DATE-OBS"] = fits.Card(
         "DATE-OBS",
-        Time(cube.last_hdu.data["TSTART"][0] + 2457000, format="jd").isot,
+        Time(
+            cube.last_hdu.data["TSTART" if not cube.tica else "STARTTJD"][0] + 2457000,
+            format="jd",
+        ).isot,
         "TSTART as UTC calendar date",
     )
     header_dict["DATE-END"] = fits.Card(
         "DATE-END",
-        Time(cube.last_hdu.data["TSTOP"][-1] + 2457000, format="jd").isot,
+        Time(
+            cube.last_hdu.data["TSTOP" if not cube.tica else "ENDTJD"][-1] + 2457000,
+            format="jd",
+        ).isot,
         "TSTOP as UTC calendar date",
     )
     return header_dict
@@ -118,8 +124,10 @@ def get_output_primary_hdu(cube):
         "TICVER",
         "CRMITEN",
         "CRBLKSZ",
-        "CRSPOC",
     ]
+    if not cube.tica:
+        for a in ["CRSPOC"]:
+            keys.append(a)
     header_dict = cube.header_dict
     return fits.PrimaryHDU(header=fits.Header(cards=[header_dict[key] for key in keys]))
 
@@ -135,7 +143,6 @@ def get_output_first_extention_header(cube):
         "RA_OBJ",
         "DEC_OBJ",
         "EQUINOX",
-        "EXPOSURE",
         "TIMEREF",
         "TASSIGN",
         "TIMESYS",
@@ -143,37 +150,43 @@ def get_output_first_extention_header(cube):
         "BJDREFF",
         "TIMEUNIT",
         "TELAPSE",
-        "LIVETIME",
         "TSTART",
         "TSTOP",
         "DATE-OBS",
         "DATE-END",
-        "DEADC",
-        "TIMEPIXR",
-        "TIERRELA",
-        "INT_TIME",
-        "READTIME",
-        "FRAMETIM",
-        "NUM_FRM",
-        "TIMEDEL",
-        "BACKAPP",
-        "DEADAPP",
-        "VIGNAPP",
-        "GAINA",
-        "GAINB",
-        "GAINC",
-        "GAIND",
-        "READNOIA",
-        "READNOIB",
-        "READNOIC",
-        "READNOID",
-        "NREADOUT",
-        "FXDOFF",
-        "MEANBLCA",
-        "MEANBLCB",
-        "MEANBLCC",
-        "MEANBLCD",
     ]
+    if not cube.tica:
+        for a in [
+            "EXPOSURE",
+            "LIVETIME",
+            "DEADC",
+            "TIMEPIXR",
+            "TIERRELA",
+            "INT_TIME",
+            "READTIME",
+            "FRAMETIM",
+            "NUM_FRM",
+            "TIMEDEL",
+            "BACKAPP",
+            "DEADAPP",
+            "VIGNAPP",
+            "GAINA",
+            "GAINB",
+            "GAINC",
+            "GAIND",
+            "READNOIA",
+            "READNOIB",
+            "READNOIC",
+            "READNOID",
+            "NREADOUT",
+            "FXDOFF",
+            "MEANBLCA",
+            "MEANBLCB",
+            "MEANBLCC",
+            "MEANBLCD",
+        ]:
+            keys.append(a)
+
     header_dict = cube.header_dict
     return fits.Header(cards=[header_dict[key] for key in keys])
 
@@ -371,7 +384,7 @@ def _fix_primary_hdu(hdu):
     hdr["TICID"] = (None, "unique tess target identifier")
 
     delete_kwds_wildcards = [
-        "NAXIS*" "SC_*",
+        "NAXIS*SC_*",
         "RMS*",
         "A_*",
         "AP_*",

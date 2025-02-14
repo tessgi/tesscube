@@ -1,9 +1,20 @@
-__version__ = "1.0.5"
 # Standard library
 import os  # noqa
 import tempfile
 
 PACKAGEDIR = os.path.abspath(os.path.dirname(__file__))
+
+from importlib.metadata import version, PackageNotFoundError  # noqa
+
+
+def get_version():
+    try:
+        return version("tesscube")
+    except PackageNotFoundError:
+        return "unknown"
+
+
+__version__ = get_version()
 
 HDR_SIZE = 2880  # bytes
 BYTES_PER_PIX = 4  # float32

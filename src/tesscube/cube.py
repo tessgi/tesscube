@@ -7,7 +7,7 @@ from astropy.io import fits
 from astropy.time import Time
 from astropy.wcs.utils import fit_wcs_from_points
 
-from . import BYTES_PER_PIX, DATA_OFFSET, log
+from . import BYTES_PER_PIX, DATA_OFFSET, log, HDR_SIZE
 from .fits import (
     get_header_dict,
     get_output_first_extention_header,
@@ -38,9 +38,17 @@ class TESSCube(QueryMixin, WCSMixin):
         The CCD number (1-4).
     """
 
-    def __init__(self, sector: int, camera: int, ccd: int):
+    def __init__(self, sector: int, camera: int, ccd: int, tica=False):
         self.sector, self.camera, self.ccd = sector, camera, ccd
-        self.object_key = f"tess/public/mast/tess-s{sector:04}-{camera}-{ccd}-cube.fits"
+        self.tica = tica
+        if self.tica:
+            self.object_key = (
+                f"tess/public/mast/tica/tica-s{sector:04}-{camera}-{ccd}-cube.fits"
+            )
+        else:
+            self.object_key = (
+                f"tess/public/mast/tess-s{sector:04}-{camera}-{ccd}-cube.fits"
+            )
         (
             self.nsets,
             self.nframes,
@@ -115,6 +123,8 @@ class TESSCube(QueryMixin, WCSMixin):
             DATA_OFFSET
             + (self.ncolumns * self.nframes * self.nsets * self.nrows) * BYTES_PER_PIX
         )
+        if self.tica:
+            end += HDR_SIZE * 4
         return get_last_hdu(object_key=self.object_key, end=end)
 
     @cached_property
@@ -124,15 +134,18 @@ class TESSCube(QueryMixin, WCSMixin):
 
     @cached_property
     def tstart(self):
-        return self.last_hdu.data["TSTART"]
+        return self.last_hdu.data["TSTART" if not self.tica else "STARTTJD"]
 
     @cached_property
     def tstop(self):
-        return self.last_hdu.data["TSTOP"]
+        return self.last_hdu.data["TSTOP" if not self.tica else "ENDTJD"]
 
     @cached_property
     def telapse(self):
-        return self.last_hdu.data["TELAPSE"]
+        if not self.tica:
+            return self.last_hdu.data["TELAPSE"]
+        else:
+            return self.tstop - self.tstart
 
     @lru_cache(maxsize=4)
     def get_ffi(
@@ -474,12 +487,18 @@ class TESSCube(QueryMixin, WCSMixin):
     @cached_property
     def timecorr(self):
         """Barycentric time correction for the center of the FFI."""
-        return self.last_hdu.data["BARYCORR"]
+        if not self.tica:
+            return self.last_hdu.data["BARYCORR"]
+        else:
+            return self.time * 0
 
     @cached_property
     def quality(self):
         """SPOC provided quality flags for each cadence."""
-        return self.last_hdu.data["DQUALITY"]
+        if not self.tica:
+            return self.last_hdu.data["DQUALITY"]
+        else:
+            return self.last_hdu.data["QUAL_BIT"]
 
     @cached_property
     def cadence_number(self):
@@ -492,7 +511,10 @@ class TESSCube(QueryMixin, WCSMixin):
     @cached_property
     def exposure_time(self):
         """Exposure time in days"""
-        return self.last_hdu.data["EXPOSURE"][0]
+        if not self.tica:
+            return self.last_hdu.data["EXPOSURE"][0]
+        else:
+            return self.last_hdu.data["INT_TIME"] / 86400
 
     @property
     def shape(self):
