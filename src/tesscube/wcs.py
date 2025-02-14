@@ -56,8 +56,12 @@ def _extract_average_WCS(hdu):
                 value = data[idx]
                 idx += 1
             wcs_hdu.header[attr] = value
-    wcs_hdu.header["WCSAXES"] = int(wcs_hdu.header["WCSAXES"])
-    wcs_hdu.header["WCSAXESP"] = int(wcs_hdu.header["WCSAXESP"])
+    wcs_hdu.header["WCSAXES"] = int(
+        wcs_hdu.header["WCSAXES"] if "WCSAXES" in wcs_hdu.header.keys() else 2
+    )
+    wcs_hdu.header["WCSAXESP"] = int(
+        wcs_hdu.header["WCSAXESP"] if "WCSAXESP" in wcs_hdu.header.keys() else 2
+    )
     return WCS(wcs_hdu.header)
 
 

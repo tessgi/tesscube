@@ -175,6 +175,7 @@ Please include a self-contained example that fully demonstrates your problem or 
 Changelog:
 ==========
 
+  - Added ability to use "TICA" FFIs. This is experimental and might be buggy.
   - Patch removes the un-needed `fitsio` dependency
   - Initial v1.0.0 release of `tesscube`.
   

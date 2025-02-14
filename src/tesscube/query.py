@@ -15,6 +15,8 @@ from astropy.utils.exceptions import AstropyUserWarning
 from botocore import UNSIGNED
 from botocore.config import Config
 
+from astropy.time import Time
+
 from . import (
     BUCKET_NAME,
     BYTES_PER_PIX,
@@ -366,9 +368,14 @@ class QueryMixin:
             nrows=nrows,
             frame_range=frame_range,
         )
-        values = np.asarray(values).reshape((nrows, ncolumns, nframes, self.nsets))
-        flux, flux_err = np.asarray(values).transpose([3, 2, 0, 1])
-        return flux, flux_err
+        if self.nsets == 1:
+            values = np.asarray(values).reshape((nrows, ncolumns, nframes))
+            flux = np.asarray(values).transpose([2, 0, 1])
+            return flux, flux * 0
+        else:
+            values = np.asarray(values).reshape((nrows, ncolumns, nframes, self.nsets))
+            flux, flux_err = np.asarray(values).transpose([3, 2, 0, 1])
+            return flux, flux_err
 
     @lru_cache(maxsize=128)
     def get_flux(
@@ -443,29 +450,149 @@ async def async_get_primary_hdu(object_key: str) -> fits.PrimaryHDU:
     async with get_session().create_client(
         "s3", config=Config(signature_version=UNSIGNED)
     ) as s3:
-        # Retrieve the cube header
-        response = await s3.get_object(
-            Bucket=BUCKET_NAME,
-            Key=object_key,
-            Range=f"bytes=0-{HDR_SIZE * 2-1}",
-        )
-        first_bytes = await response["Body"].read()
-        with warnings.catch_warnings():
-            # Ignore "File may have been truncated" warning
-            warnings.simplefilter("ignore", AstropyUserWarning)
-            with fits.open(BytesIO(first_bytes)) as hdulist:
-                (
-                    hdulist[0].header["NAXIS1"],
-                    hdulist[0].header["NAXIS2"],
-                    hdulist[0].header["NAXIS3"],
-                    hdulist[0].header["NAXIS4"],
-                ) = (
-                    hdulist[1].header["NAXIS1"],
-                    hdulist[1].header["NAXIS2"],
-                    hdulist[1].header["NAXIS3"],
-                    hdulist[1].header["NAXIS4"],
-                )
-                return hdulist[0]
+        if "tica" in object_key.lower():
+            # Retrieve the cube header
+            response = await s3.get_object(
+                Bucket=BUCKET_NAME,
+                Key=object_key,
+                Range=f"bytes=0-{(HDR_SIZE * 3) * 2 - 1}",
+            )
+            first_bytes = await response["Body"].read()
+            with warnings.catch_warnings():
+                # Ignore "File may have been truncated" warning
+                warnings.simplefilter("ignore", AstropyUserWarning)
+                with fits.open(BytesIO(first_bytes)) as hdulist:
+                    (
+                        hdulist[0].header["NAXIS1"],
+                        hdulist[0].header["NAXIS2"],
+                        hdulist[0].header["NAXIS3"],
+                        hdulist[0].header["NAXIS4"],
+                    ) = (
+                        hdulist[1].header["NAXIS1"],
+                        hdulist[1].header["NAXIS2"],
+                        hdulist[1].header["NAXIS3"],
+                        hdulist[1].header["NAXIS4"],
+                    )
+
+                    hdulist[0].header["BJDREFI"] = (
+                        2457000,
+                        "integer part of BTJD reference date",
+                    )
+                    hdulist[0].header["BJDREFF"] = (
+                        0.00000000,
+                        "fraction of the day in BTJD reference date",
+                    )
+                    hdulist[0].header["TIMEUNIT"] = (
+                        "d",
+                        "time unit for TIME, TSTART and TSTOP",
+                    )
+
+                    # Adding some missing kwds not in TICA (but in Ames-produced SPOC ffis)
+                    hdulist[0].header["EXTVER"] = (
+                        "1",
+                        "extension version number (not format version)",
+                    )
+                    hdulist[0].header["SIMDATA"] = (
+                        False,
+                        "file is based on simulated data",
+                    )
+                    hdulist[0].header["NEXTEND"] = (
+                        "2",
+                        "number of standard extensions",
+                    )
+                    hdulist[0].header["TSTART"] = (
+                        hdulist[0].header["STARTTJD"],
+                        "observation start time in TJD of first FFI",
+                    )
+                    hdulist[0].header["TSTOP"] = (
+                        hdulist[0].header["ENDTJD"],
+                        "observation stop time in TJD of last FFI",
+                    )
+                    hdulist[0].header["CAMERA"] = (
+                        hdulist[0].header["CAMNUM"],
+                        "Camera number",
+                    )
+                    hdulist[0].header["CCD"] = (
+                        hdulist[0].header["CCDNUM"],
+                        "CCD chip number",
+                    )
+                    hdulist[0].header["ASTATE"] = (
+                        None,
+                        "archive state F indicates single orbit processing",
+                    )
+                    hdulist[0].header["CRMITEN"] = (
+                        hdulist[0].header["CRM"],
+                        "spacecraft cosmic ray mitigation enabled",
+                    )
+                    hdulist[0].header["CRBLKSZ"] = (
+                        None,
+                        "[exposures] s/c cosmic ray mitigation block siz",
+                    )
+                    hdulist[0].header["FFIINDEX"] = (
+                        hdulist[0].header["CADENCE"],
+                        "number of FFI cadence interval of first FFI",
+                    )
+                    hdulist[0].header["DATA_REL"] = (
+                        None,
+                        "data release version number",
+                    )
+
+                    date_obs = Time(
+                        hdulist[0].header["TSTART"] + hdulist[0].header["BJDREFI"],
+                        format="jd",
+                    ).iso
+                    date_end = Time(
+                        hdulist[0].header["TSTOP"] + hdulist[0].header["BJDREFI"],
+                        format="jd",
+                    ).iso
+                    hdulist[0].header["DATE-OBS"] = (
+                        date_obs,
+                        "TSTART as UTC calendar date of first FFI",
+                    )
+                    hdulist[0].header["DATE-END"] = (
+                        date_end,
+                        "TSTOP as UTC calendar date of last FFI",
+                    )
+
+                    hdulist[0].header["FILEVER"] = (None, "file format version")
+                    hdulist[0].header["RADESYS"] = (
+                        None,
+                        "reference frame of celestial coordinates",
+                    )
+                    hdulist[0].header["SCCONFIG"] = (
+                        None,
+                        "spacecraft configuration ID",
+                    )
+                    hdulist[0].header["TIMVERSN"] = (
+                        None,
+                        "OGIP memo number for file format",
+                    )
+
+                    return hdulist[0]
+        else:
+            # Retrieve the cube header
+            response = await s3.get_object(
+                Bucket=BUCKET_NAME,
+                Key=object_key,
+                Range=f"bytes=0-{HDR_SIZE * 2 - 1}",
+            )
+            first_bytes = await response["Body"].read()
+            with warnings.catch_warnings():
+                # Ignore "File may have been truncated" warning
+                warnings.simplefilter("ignore", AstropyUserWarning)
+                with fits.open(BytesIO(first_bytes)) as hdulist:
+                    (
+                        hdulist[0].header["NAXIS1"],
+                        hdulist[0].header["NAXIS2"],
+                        hdulist[0].header["NAXIS3"],
+                        hdulist[0].header["NAXIS4"],
+                    ) = (
+                        hdulist[1].header["NAXIS1"],
+                        hdulist[1].header["NAXIS2"],
+                        hdulist[1].header["NAXIS3"],
+                        hdulist[1].header["NAXIS4"],
+                    )
+                    return hdulist[0]
 
 
 async def async_get_last_hdu(object_key: str, end: int) -> fits.PrimaryHDU:
@@ -495,11 +622,12 @@ async def async_get_last_hdu(object_key: str, end: int) -> fits.PrimaryHDU:
         # n_pixels = len(first_bytes) // BYTES_PER_PIX
         # values = np.asarray(struct.unpack(">" + "f" * n_pixels, first_bytes))
         # return values
-        return fits.open(
+        hdulist = fits.open(
             BytesIO(first_bytes.lstrip(b"\x00")),
             ignore_missing_simple=True,
             lazy_load_hdus=False,
-        )[0]
+        )
+        return hdulist[0]
 
 
 async def async_get_ffi(ffi_name: str) -> fits.HDUList:
