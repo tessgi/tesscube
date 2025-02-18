@@ -141,6 +141,7 @@ TICA FFIs do not always conform to the same standard and sometimes have larger h
 Once this object is initialized you should be able to work with it to extract a TPF
 
 .. code-block:: python
+
   cube.get_tpf()
 
 TICA FFIs do not have errors. When functions should return errors, these will be filled with zeros.
