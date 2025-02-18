@@ -6,6 +6,8 @@ import warnings
 from functools import lru_cache
 from io import BytesIO
 from typing import Optional, Tuple, List, Union
+import boto3
+
 
 import numpy as np
 from aiobotocore.session import get_session
@@ -318,12 +320,17 @@ class QueryMixin:
         if isinstance(coordinates, tuple):
             coordinates = [coordinates]
         runs = convert_coordinates_to_runs(coordinates)
-        flux, flux_err = np.vstack(
-            _sync_call(self.async_get_data_per_rows, runs=runs)
-        ).transpose([2, 1, 0])
-        if return_errors:
-            return flux, flux_err
-        return flux
+        values = _sync_call(self.async_get_data_per_rows, runs=runs)
+        if self.nsets == 1:
+            flux = np.vstack(values)[:, :, 0].T
+            if return_errors:
+                return flux, np.zeros_like(flux)
+            return flux
+        else:
+            flux, flux_err = np.vstack(values).transpose([2, 1, 0])
+            if return_errors:
+                return flux, flux_err
+            return flux
 
     async def async_get_flux(
         self,
@@ -371,7 +378,7 @@ class QueryMixin:
         if self.nsets == 1:
             values = np.asarray(values).reshape((nrows, ncolumns, nframes))
             flux = np.asarray(values).transpose([2, 0, 1])
-            return flux, flux * 0
+            return flux, np.zeros_like(flux)
         else:
             values = np.asarray(values).reshape((nrows, ncolumns, nframes, self.nsets))
             flux, flux_err = np.asarray(values).transpose([3, 2, 0, 1])
@@ -424,8 +431,12 @@ class QueryMixin:
 
 
 @lru_cache()
-def get_primary_hdu(object_key):
-    return _fix_primary_hdu(_sync_call(async_get_primary_hdu, object_key=object_key))
+def get_primary_hdu(object_key, nhdr_blocks):
+    return _fix_primary_hdu(
+        _sync_call(
+            async_get_primary_hdu, object_key=object_key, nhdr_blocks=nhdr_blocks
+        )
+    )
 
 
 @lru_cache()
@@ -433,7 +444,9 @@ def get_last_hdu(object_key, end):
     return _sync_call(async_get_last_hdu, object_key=object_key, end=end)
 
 
-async def async_get_primary_hdu(object_key: str) -> fits.PrimaryHDU:
+async def async_get_primary_hdu(
+    object_key: str, nhdr_blocks: int = 2
+) -> fits.PrimaryHDU:
     """
     Asynchronously retrieves the primary HDU of a cube FITS file.
 
@@ -441,12 +454,16 @@ async def async_get_primary_hdu(object_key: str) -> fits.PrimaryHDU:
     ----------
     object_key : str
         The S3 object key of the FITS file (i.e. the file name)
+    nhdr_blocks: int
+        The number of HDR_SIZE blocks that constitute the first two headers.
+        Defaults to 2, which is correct for SPOC.
 
     Returns
     -------
     astropy.io.fits.PrimaryHDU
         The primary HDU of the FITS file, with corrected headers.
     """
+
     async with get_session().create_client(
         "s3", config=Config(signature_version=UNSIGNED)
     ) as s3:
@@ -455,7 +472,7 @@ async def async_get_primary_hdu(object_key: str) -> fits.PrimaryHDU:
             response = await s3.get_object(
                 Bucket=BUCKET_NAME,
                 Key=object_key,
-                Range=f"bytes=0-{(HDR_SIZE * 3) * 2 - 1}",
+                Range=f"bytes=0-{(HDR_SIZE * nhdr_blocks) - 1}",
             )
             first_bytes = await response["Body"].read()
             with warnings.catch_warnings():
@@ -574,7 +591,7 @@ async def async_get_primary_hdu(object_key: str) -> fits.PrimaryHDU:
             response = await s3.get_object(
                 Bucket=BUCKET_NAME,
                 Key=object_key,
-                Range=f"bytes=0-{HDR_SIZE * 2 - 1}",
+                Range=f"bytes=0-{(HDR_SIZE * nhdr_blocks) - 1}",
             )
             first_bytes = await response["Body"].read()
             with warnings.catch_warnings():
@@ -659,3 +676,37 @@ async def async_get_ffi(ffi_name: str) -> fits.HDUList:
             ignore_missing_simple=True,
             lazy_load_hdus=False,
         )
+
+
+def list_aws_directories(dir="tess/public/"):
+    """Lists the directories in the stpubdata bucket for the given `dir`"""
+    # Initialize the S3 client with unsigned requests
+    s3 = boto3.client("s3", config=Config(signature_version=UNSIGNED))
+
+    # Use a paginator to handle large result sets
+    paginator = s3.get_paginator("list_objects_v2")
+
+    # Iterate through all pages
+    r = []
+    for page in paginator.paginate(Bucket=BUCKET_NAME, Prefix=dir, Delimiter="/"):
+        if "CommonPrefixes" in page:
+            for prefix_obj in page["CommonPrefixes"]:
+                r.append(prefix_obj["Prefix"])
+    return r
+
+
+def list_aws_files(dir="tess/public/"):
+    """Lists the files in the stpubdata bucket for a given `dir`"""
+    # Initialize the S3 client with unsigned requests
+    s3 = boto3.client("s3", config=Config(signature_version=UNSIGNED))
+
+    # Use a paginator to handle large result sets
+    paginator = s3.get_paginator("list_objects_v2")
+
+    # Iterate through all pages
+    r = []
+    for page in paginator.paginate(Bucket=BUCKET_NAME, Prefix=dir, Delimiter="/"):
+        if "Contents" in page:
+            for obj in page["Contents"]:
+                r.append(obj["Key"])
+    return r

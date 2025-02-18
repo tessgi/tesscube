@@ -38,9 +38,11 @@ class TESSCube(QueryMixin, WCSMixin):
         The CCD number (1-4).
     """
 
-    def __init__(self, sector: int, camera: int, ccd: int, tica=False):
+    def __init__(self, sector: int, camera: int, ccd: int, tica=False, nhdr_blocks=2):
         self.sector, self.camera, self.ccd = sector, camera, ccd
         self.tica = tica
+        self.nhdr_blocks = nhdr_blocks
+
         if self.tica:
             self.object_key = (
                 f"tess/public/mast/tica/tica-s{sector:04}-{camera}-{ccd}-cube.fits"
@@ -114,7 +116,7 @@ class TESSCube(QueryMixin, WCSMixin):
     @cached_property
     def primary_hdu(self):
         """The primary HDU of the cube file."""
-        return get_primary_hdu(object_key=self.object_key)
+        return get_primary_hdu(object_key=self.object_key, nhdr_blocks=self.nhdr_blocks)
 
     @cached_property
     def last_hdu(self):
@@ -124,7 +126,10 @@ class TESSCube(QueryMixin, WCSMixin):
             + (self.ncolumns * self.nframes * self.nsets * self.nrows) * BYTES_PER_PIX
         )
         if self.tica:
-            end += HDR_SIZE * 4
+            return get_last_hdu(
+                object_key=self.object_key,
+                end=end + (HDR_SIZE * (self.nhdr_blocks - 2)),
+            )
         return get_last_hdu(object_key=self.object_key, end=end)
 
     @cached_property

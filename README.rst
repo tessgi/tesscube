@@ -102,10 +102,10 @@ Alternatively, you can index into the cube like so:
 
 Both will return an `astropy.fits.HDUList`, with a file format similar to the official mission products.
 
-Obtain a lower time resolution TPF
-----------------------------------
+Obtain a time-coadded TPF
+-------------------------
 
-You can obtain a lower time resolution by either passing in a `frame_bin` parameter, which will downsample the resultant TPF,
+TESS data can be coadded in time to increase signal to noise at the expense of time resolution. You can obtain a lower time resolution by either passing in a `frame_bin` parameter, which will downsample the resultant TPF,
 
 .. code-block:: python
 
@@ -126,6 +126,26 @@ Or you can slice the cube, which will return a downsampled TPF
 
 Both will return an `astropy.fits.HDUList`, with a file format similar to the official mission products, with the time resolution reduced by a factor of 10.
 
+Obtain a TICA TPF
+-----------------
+
+TICA data are FFIs produced by MIT with a quick turn around time that are rapidly delivered to MIT to enable quick processing of data for transient events. You can create a TPF out of TICA products, but this functionality is potentially brittle.
+
+TICA FFIs do not always conform to the same standard and sometimes have larger headers. This means they are hard to read in by tesscube, which assumes that there are always the same numbers of bytes. You will have to specify for a given sector how many header blocks each TICA cube has. Usually this is 6, but sometimes it is 7, depending on the sector.
+
+.. code-block:: python
+
+  from tesscube import TESSCubes
+  cube = TESSCube(sector=1, camera=1, ccd=4, tica=True, nhdr_blocks=6)
+
+Once this object is initialized you should be able to work with it to extract a TPF
+
+.. code-block:: python
+  cube.get_tpf()
+
+TICA FFIs do not have errors. When functions should return errors, these will be filled with zeros.
+
+Currently there is not a way to index into the cube object and get the TICA FFI, because these are not stored in the AWS cloud. 
 
 .. <!-- quickstart content end -->
 
