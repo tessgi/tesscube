@@ -511,7 +511,7 @@ class TESSCube(QueryMixin, WCSMixin):
         cadence_number = np.cumsum(
             np.round(np.diff(self.tstop) / np.median(self.telapse)).astype(int)
         )
-        return np.hstack([cadence_number, cadence_number[-1] + 1])
+        return np.hstack([cadence_number[0] - 1, cadence_number])
 
     @cached_property
     def exposure_time(self):
