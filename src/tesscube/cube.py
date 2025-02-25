@@ -347,6 +347,8 @@ class TESSCube(QueryMixin, WCSMixin):
             pos_corr1[k],
             pos_corr2[k],
         )
+        # SPOC delivers time as clock time + barycentric correction so we do the same
+        time += timecorr
 
         if frame_bin > 1:
             idxs = np.hstack(
