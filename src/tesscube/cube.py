@@ -18,6 +18,12 @@ from .fits import (
 from .query import QueryMixin, async_get_ffi, get_last_hdu, get_primary_hdu
 from .utils import _sync_call, validate_tuple
 from .wcs import WCSMixin, WCS_ATTRS
+from lkspacecraft import TESSSpacecraft
+import warnings
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    ts = TESSSpacecraft()
 
 
 class TESSCube(QueryMixin, WCSMixin):
@@ -85,6 +91,28 @@ class TESSCube(QueryMixin, WCSMixin):
             A dictionary of header keywords from the MAST cube.
         """
         return get_header_dict(self)
+
+    @staticmethod
+    def from_name(name: str, sector: int):
+        """
+        Create a TESSCube object from a name.
+
+        This method identifies the appropriate TESS cube that contains the
+        given SkyCoord and returns a TESSCube object.
+
+        Parameters
+        ----------
+        name : str
+            Name of the target. This will be resolved using astropy.coordinates.SkyCoord
+        sector : int
+            The TESS observation sector number.
+
+        Returns
+        -------
+        TESSCube
+            The TESSCube object containing the specified coordinates.
+        """
+        return TESSCube.from_skycoord(SkyCoord.from_name(name), sector=sector)
 
     @staticmethod
     def from_skycoord(coord: SkyCoord, sector: int):
@@ -245,7 +273,9 @@ class TESSCube(QueryMixin, WCSMixin):
             corner = validate_tuple(target)
             if calculate_poscorr:
                 target = SkyCoord(*self.wcs.all_pix2world([corner], 0)[0], unit="deg")
-        elif isinstance(target, SkyCoord):
+        elif isinstance(target, (SkyCoord, str)):
+            if isinstance(target, str):
+                target = SkyCoord.from_name(target)
             if not self.wcs.footprint_contains(target):
                 raise ValueError(
                     f"Target {target} not in Sector {self.sector}, Camera {self.camera}, CCD {self.ccd}."
@@ -306,9 +336,12 @@ class TESSCube(QueryMixin, WCSMixin):
         else:
             k = np.ones(len(self), bool)
 
+        c0 = self.wcs.pixel_to_world(
+            C[shape[0] // 2, shape[1] // 2], R[shape[0] // 2, shape[1] // 2]
+        )
         time, timecorr, cadenceno, quality, pos_corr1, pos_corr2 = (
             self.time[k],
-            self.timecorr[k],
+            self.get_timecorr(ra=c0.ra.deg, dec=c0.dec.deg)[k],
             self.cadence_number[k],
             self.quality[k],
             pos_corr1[k],
@@ -489,11 +522,17 @@ class TESSCube(QueryMixin, WCSMixin):
         """Time of the frames in BTJD. Note this is the time at the center of the FFI."""
         return (self.tstart + self.tstop) / 2
 
-    @cached_property
-    def timecorr(self):
+    def get_timecorr(self, ra, dec):
         """Barycentric time correction for the center of the FFI."""
         if not self.tica:
-            return self.last_hdu.data["BARYCORR"]
+            # return self.last_hdu.data["BARYCORR"]
+            # Barycentric Time Correction in seconds
+            tc = ts.get_barycentric_time_correction(
+                time=self.time - self.last_hdu.data["BARYCORR"] + ts.time_offset,
+                ra=ra,
+                dec=dec,
+            )
+            return tc / 86400
         else:
             return self.time * 0
 
