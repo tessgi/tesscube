@@ -16,7 +16,7 @@ aiobotocore = "^2.7.0"
 rich = "^13.7.0"
 astropy = ">=5.0"
 nest-asyncio = "^1.5.8"
-lkspacecraft = "^1.0.5"
+lkspacecraft = "^1.0.6"
 boto3 = ">=1.0.0"
 
 [tool.poetry.group.dev]
