@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quickstart &#8212; tesscube</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=781dc9bd"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Quickstart';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tesscube Tutorial" href="tutorials/tutorial1.html" />
+    <link rel="prev" title="tesscube" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="25 Feb 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tesscube</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Quickstart
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials/tutorial1.html">
+    tesscube Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="apidoc.html">
+    tesscube API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="GetInvolved.html">
+    Contributing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Contact.html">
+    Contact
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/tessgi/tesscube" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Quickstart
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials/tutorial1.html">
+    tesscube Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="apidoc.html">
+    tesscube API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="GetInvolved.html">
+    Contributing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Contact.html">
+    Contact
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/tessgi/tesscube" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Quickstart</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">#</a></h1>
+<p>The easiest way to install <code class="docutils literal notranslate"><span class="pre">tesscube</span></code> and all of its dependencies is to use the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command.</p>
+<p>To install <code class="docutils literal notranslate"><span class="pre">tesscube</span></code>, run the following command in a terminal window:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>tesscube<span class="w"> </span>--upgrade
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--upgrade</span></code> flag is optional, but recommended if you already
+have <code class="docutils literal notranslate"><span class="pre">tesscube</span></code> installed and want to upgrade to the latest version.</p>
+<p>Depending on the specific Python environment, you may need to replace <code class="docutils literal notranslate"><span class="pre">python</span></code>
+with the correct Python interpreter, e.g., <code class="docutils literal notranslate"><span class="pre">python3</span></code>.</p>
+<section id="load-an-ffi-cube">
+<h2>Load an FFI cube<a class="headerlink" href="#load-an-ffi-cube" title="Link to this heading">#</a></h2>
+<p>You can work with an FFI cube by loading it using a sector, camera, and CCD number.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="obtain-an-ffi-using-tesscube">
+<h2>Obtain an FFI Using <code class="xref py py-obj docutils literal notranslate"><span class="pre">tesscube</span></code><a class="headerlink" href="#obtain-an-ffi-using-tesscube" title="Link to this heading">#</a></h2>
+<p>You can obtain an FFI image by indexing into a cube</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ffi</span> <span class="o">=</span> <span class="n">cube</span><span class="p">[</span><span class="mi">300</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This will return an <code class="xref py py-obj docutils literal notranslate"><span class="pre">astropy.fits.HDUList</span></code></p>
+</section>
+<section id="obtain-a-tpf">
+<h2>Obtain a TPF<a class="headerlink" href="#obtain-a-tpf" title="Link to this heading">#</a></h2>
+<p>You can obtain a TPF in two ways, either you can either pass a pixel position</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.coordinates</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="n">corner</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1282</span><span class="p">,</span> <span class="mi">1750</span><span class="p">)</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tpf</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">get_tpf</span><span class="p">(</span><span class="n">corner</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Or you can pass an astropy SkyCoord object containing the RA and Dec of the target</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.coordinates</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="n">coord</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="o">.</span><span class="n">from_name</span><span class="p">(</span><span class="s2">&quot;AU Mic&quot;</span><span class="p">)</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tpf</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">get_tpf</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Alternatively, you can index into the cube like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tpf</span> <span class="o">=</span> <span class="n">cube</span><span class="p">[:,</span> <span class="mi">401</span><span class="p">:</span><span class="mi">410</span><span class="p">,</span> <span class="mi">503</span><span class="p">:</span><span class="mi">510</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Both will return an <code class="xref py py-obj docutils literal notranslate"><span class="pre">astropy.fits.HDUList</span></code>, with a file format similar to the official mission products.</p>
+</section>
+<section id="obtain-a-time-coadded-tpf">
+<h2>Obtain a time-coadded TPF<a class="headerlink" href="#obtain-a-time-coadded-tpf" title="Link to this heading">#</a></h2>
+<p>TESS data can be coadded in time to increase signal to noise at the expense of time resolution. You can obtain a lower time resolution by either passing in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">frame_bin</span></code> parameter, which will downsample the resultant TPF,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.coordinates</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="n">corner</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1282</span><span class="p">,</span> <span class="mi">1750</span><span class="p">)</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tpf</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">get_tpf</span><span class="p">(</span><span class="n">corner</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">frame_bin</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or you can slice the cube, which will return a downsampled TPF</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCube</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tpf</span> <span class="o">=</span> <span class="n">cube</span><span class="p">[::</span><span class="mi">10</span><span class="p">,</span> <span class="mi">401</span><span class="p">:</span><span class="mi">410</span><span class="p">,</span> <span class="mi">503</span><span class="p">:</span><span class="mi">510</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Both will return an <code class="xref py py-obj docutils literal notranslate"><span class="pre">astropy.fits.HDUList</span></code>, with a file format similar to the official mission products, with the time resolution reduced by a factor of 10.</p>
+</section>
+<section id="obtain-a-tica-tpf">
+<h2>Obtain a TICA TPF<a class="headerlink" href="#obtain-a-tica-tpf" title="Link to this heading">#</a></h2>
+<p>TICA data are FFIs produced by MIT with a quick turn around time that are rapidly delivered to MIT to enable quick processing of data for transient events. You can create a TPF out of TICA products, but this functionality is potentially brittle.</p>
+<p>TICA FFIs do not always conform to the same standard and sometimes have larger headers. This means they are hard to read in by tesscube, which assumes that there are always the same numbers of bytes. You will have to specify for a given sector how many header blocks each TICA cube has. Usually this is 6, but sometimes it is 7, depending on the sector.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tesscube</span><span class="w"> </span><span class="kn">import</span> <span class="n">TESSCubes</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">TESSCube</span><span class="p">(</span><span class="n">sector</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">camera</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ccd</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tica</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nhdr_blocks</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once this object is initialized you should be able to work with it to extract a TPF</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cube</span><span class="o">.</span><span class="n">get_tpf</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>TICA FFIs do not have errors. When functions should return errors, these will be filled with zeros.</p>
+<p>Currently there is not a way to index into the cube object and get the TICA FFI, because these are not stored in the AWS cloud.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">tesscube</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorials/tutorial1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">tesscube</span></code> Tutorial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-an-ffi-cube">Load an FFI cube</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain-an-ffi-using-tesscube">Obtain an FFI Using <code class="xref py py-obj docutils literal notranslate"><span class="pre">tesscube</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain-a-tpf">Obtain a TPF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain-a-time-coadded-tpf">Obtain a time-coadded TPF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtain-a-tica-tpf">Obtain a TICA TPF</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/Quickstart.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, TESS Science Support Center.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

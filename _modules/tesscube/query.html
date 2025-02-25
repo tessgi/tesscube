@@ -1,0 +1,1196 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tesscube.query &#8212; tesscube</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=781dc9bd"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/tesscube/query';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="25 Feb 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">tesscube</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Quickstart.html">
+    Quickstart
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/tutorial1.html">
+    tesscube Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../apidoc.html">
+    tesscube API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../GetInvolved.html">
+    Contributing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Contact.html">
+    Contact
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/tessgi/tesscube" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Quickstart.html">
+    Quickstart
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/tutorial1.html">
+    tesscube Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../apidoc.html">
+    tesscube API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../GetInvolved.html">
+    Contributing
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Contact.html">
+    Contact
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/tessgi/tesscube" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">tesscube.query</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for tesscube.query</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Mixin class to enable queries. This is in a separate class for readability.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aiobotocore.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">aiobotocore.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AioBaseClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.utils.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AstropyUserWarning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">botocore</span><span class="w"> </span><span class="kn">import</span> <span class="n">UNSIGNED</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">botocore.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.time</span><span class="w"> </span><span class="kn">import</span> <span class="n">Time</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BUCKET_NAME</span><span class="p">,</span>
+    <span class="n">BYTES_PER_PIX</span><span class="p">,</span>
+    <span class="n">DATA_OFFSET</span><span class="p">,</span>
+    <span class="n">HDR_SIZE</span><span class="p">,</span>
+    <span class="n">MAX_CONCURRENT_DOWNLOADS</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.fits</span><span class="w"> </span><span class="kn">import</span> <span class="n">_fix_primary_hdu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_sync_call</span><span class="p">,</span> <span class="n">convert_coordinates_to_runs</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">QueryMixin</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_byte_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the byte offset of a specific pixel position.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : int</span>
+<span class="sd">            The row index of the pixel (1-indexed).</span>
+<span class="sd">        column : int</span>
+<span class="sd">            The column index of the pixel (1-indexed).</span>
+<span class="sd">        frame : int, optional</span>
+<span class="sd">            The frame index, by default 0.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        offset: int</span>
+<span class="sd">            The byte offset of the specified pixel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if (row &lt; 1) | (row &gt; 2049) | (column &lt; 1) | (column &gt; 2049):</span>
+        <span class="c1">#     raise ValueError(f&quot;`(row, column)` position `({row}, {column})` is outside of range.&quot;)</span>
+        <span class="c1"># Subtract 1 from column and row because the byte location assumes zero-indexing,</span>
+        <span class="c1"># whereas the TESS convention is to address column and row number with one-indexing.</span>
+        <span class="n">pixel_offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="n">row</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncolumns</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span>
+        <span class="n">pixel_offset</span> <span class="o">+=</span> <span class="n">frame</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span>
+        <span class="k">return</span> <span class="n">DATA_OFFSET</span> <span class="o">+</span> <span class="n">BYTES_PER_PIX</span> <span class="o">*</span> <span class="n">pixel_offset</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_byte_range_subframes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the byte range for a given row, column, and frame range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : int</span>
+<span class="sd">            The row index of the pixel (1-indexed).</span>
+<span class="sd">        column : int</span>
+<span class="sd">            The column index of the pixel (1-indexed).</span>
+<span class="sd">        frame_range : tuple of int, optional</span>
+<span class="sd">            The range of frames to consider, by default None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of int</span>
+<span class="sd">            The byte range (start, end) for the specified parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">frame_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">frame_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span><span class="p">)</span>
+        <span class="n">begin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_byte_offset</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_byte_offset</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_byte_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">column_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the byte range for a given row and column range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : int</span>
+<span class="sd">            The row index of the pixel (1-indexed).</span>
+<span class="sd">        column_range : tuple of int</span>
+<span class="sd">            The range of columns to consider.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of int</span>
+<span class="sd">            The byte range (start, end) for the specified parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">begin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_byte_offset</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_byte_offset</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_data_per_pixel</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">s3</span><span class="p">:</span> <span class="n">AioBaseClient</span><span class="p">,</span>
+        <span class="n">semaphore</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">,</span>
+        <span class="n">column</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">frame_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves data for a specific pixel over a range of frames.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s3 : aiobotocore.client.AioBaseClient</span>
+<span class="sd">            The S3 client used to fetch the data.</span>
+<span class="sd">        semaphore : asyncio.Semaphore</span>
+<span class="sd">            The semaphore to limit the number of concurrent downloads.</span>
+<span class="sd">        column : int</span>
+<span class="sd">            The column index of the pixel (1-indexed).</span>
+<span class="sd">        row : int</span>
+<span class="sd">            The row index of the pixel (1-indexed).</span>
+<span class="sd">        frame_range : tuple of int, optional</span>
+<span class="sd">            The range of frames to consider, by default None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data: np.ndarray</span>
+<span class="sd">            The pixel values for the specified range of frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">frame_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">frame_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span><span class="p">)</span>
+        <span class="n">nframes</span> <span class="o">=</span> <span class="n">frame_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">frame_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nframes</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">nframes</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can not parse `frame_range` of `</span><span class="si">{</span><span class="n">frame_range</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+
+        <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+            <span class="n">byte_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_byte_range_subframes</span><span class="p">(</span>
+                <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">frame_range</span><span class="o">=</span><span class="n">frame_range</span>
+            <span class="p">)</span>
+            <span class="n">range_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;bytes=</span><span class="si">{</span><span class="n">byte_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">byte_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span>
+                <span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object_key</span><span class="p">,</span> <span class="n">Range</span><span class="o">=</span><span class="n">range_string</span>
+            <span class="p">)</span>
+            <span class="n">data_bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">n_pixels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">)</span> <span class="o">//</span> <span class="n">BYTES_PER_PIX</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+                <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span> <span class="o">+</span> <span class="s2">&quot;f&quot;</span> <span class="o">*</span> <span class="n">n_pixels</span><span class="p">,</span> <span class="n">data_bytes</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nframes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">values</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_data_per_row</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">s3</span><span class="p">:</span> <span class="n">AioBaseClient</span><span class="p">,</span>
+        <span class="n">semaphore</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">,</span>
+        <span class="n">start_column</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">ncolumns</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">row</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves data for a specific row over a range of columns.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s3 : aiobotocore.client.AioBaseClient</span>
+<span class="sd">            The S3 client used to fetch the data.</span>
+<span class="sd">        semaphore : asyncio.Semaphore</span>
+<span class="sd">            The semaphore to limit the number of concurrent downloads.</span>
+<span class="sd">        start_column : int</span>
+<span class="sd">            The starting column index (1-indexed).</span>
+<span class="sd">        ncolumns : int</span>
+<span class="sd">            The number of columns to retrieve.</span>
+<span class="sd">        row : int, optional</span>
+<span class="sd">            The row index of the pixel (1-indexed), by default 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data: np.ndarray</span>
+<span class="sd">            The pixel values for the specified row and columns.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+            <span class="n">byte_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_byte_range</span><span class="p">(</span>
+                <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column_range</span><span class="o">=</span><span class="p">(</span><span class="n">start_column</span><span class="p">,</span> <span class="n">start_column</span> <span class="o">+</span> <span class="n">ncolumns</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">range_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;bytes=</span><span class="si">{</span><span class="n">byte_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">byte_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span>
+                <span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object_key</span><span class="p">,</span> <span class="n">Range</span><span class="o">=</span><span class="n">range_string</span>
+            <span class="p">)</span>
+            <span class="n">data_bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">n_pixels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">)</span> <span class="o">//</span> <span class="n">BYTES_PER_PIX</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+                <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span> <span class="o">+</span> <span class="s2">&quot;f&quot;</span> <span class="o">*</span> <span class="n">n_pixels</span><span class="p">,</span> <span class="n">data_bytes</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ncolumns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">values</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_data_per_rows</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">runs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves data for multiple rows.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        runs : list of tuples</span>
+<span class="sd">            A list of tuples containing parameters for each run.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data: np.ndarray</span>
+<span class="sd">            The pixel values for the specified rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">MAX_CONCURRENT_DOWNLOADS</span><span class="p">)</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span>
+            <span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">s3</span><span class="p">:</span>
+            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">:</span>
+                <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data_per_row</span><span class="p">(</span><span class="n">s3</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">,</span> <span class="o">**</span><span class="n">run</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">values</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_data_per_block</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_column</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">ncolumns</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">start_row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">nrows</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">frame_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves data for a block of pixels.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start_column : int</span>
+<span class="sd">            The starting column index (1-indexed).</span>
+<span class="sd">        ncolumns : int</span>
+<span class="sd">            The number of columns to retrieve.</span>
+<span class="sd">        start_row : int</span>
+<span class="sd">            The starting row index (1-indexed).</span>
+<span class="sd">        nrows : int</span>
+<span class="sd">            The number of rows to retrieve.</span>
+<span class="sd">        frame_range : tuple of int, optional</span>
+<span class="sd">            The range of frames to consider, by default None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data: numpy.ndarray</span>
+<span class="sd">            The pixel values for the specified block.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">MAX_CONCURRENT_DOWNLOADS</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">frame_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span>
+                <span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">)</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">s3</span><span class="p">:</span>
+                <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">nrows</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start_column</span><span class="p">,</span> <span class="n">start_column</span> <span class="o">+</span> <span class="n">ncolumns</span><span class="p">):</span>
+                        <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data_per_pixel</span><span class="p">(</span>
+                                <span class="n">s3</span><span class="p">,</span>
+                                <span class="n">semaphore</span><span class="p">,</span>
+                                <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
+                                <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span>
+                                <span class="n">frame_range</span><span class="o">=</span><span class="n">frame_range</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">values</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span>
+                <span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">)</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">s3</span><span class="p">:</span>
+                <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">nrows</span><span class="p">):</span>
+                    <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data_per_row</span><span class="p">(</span>
+                            <span class="n">s3</span><span class="p">,</span>
+                            <span class="n">semaphore</span><span class="p">,</span>
+                            <span class="n">start_column</span><span class="o">=</span><span class="n">start_column</span><span class="p">,</span>
+                            <span class="n">ncolumns</span><span class="o">=</span><span class="n">ncolumns</span><span class="p">,</span>
+                            <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">values</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pixel_timeseries</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">coordinates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]],</span>
+        <span class="n">return_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the pixel time series for the specified coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coordinates : tuple or list of tuple</span>
+<span class="sd">            The coordinates (row, column) to retrieve time series for.</span>
+<span class="sd">        return_errors : bool, optional</span>
+<span class="sd">            Whether to return the errors alongside the flux, by default False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data: numpy.ndarray or tuple of numpy.ndarray</span>
+<span class="sd">            The flux (and optionally errors) time series for the specified coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="n">coordinates</span><span class="p">]</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="n">convert_coordinates_to_runs</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">_sync_call</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">async_get_data_per_rows</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">runs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">values</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">if</span> <span class="n">return_errors</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">flux</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">flux</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">return_errors</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span>
+            <span class="k">return</span> <span class="n">flux</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_flux</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">start_column</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">ncolumns</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">start_row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">nrows</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">frame_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves flux data for a block of pixels.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start_column : int</span>
+<span class="sd">            The starting column index (1-indexed).</span>
+<span class="sd">        ncolumns : int</span>
+<span class="sd">            The number of columns to retrieve.</span>
+<span class="sd">        start_row : int</span>
+<span class="sd">            The starting row index (1-indexed).</span>
+<span class="sd">        nrows : int</span>
+<span class="sd">            The number of rows to retrieve.</span>
+<span class="sd">        frame_range : tuple of int, optional</span>
+<span class="sd">            The range of frames to consider, by default None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of numpy.ndarray</span>
+<span class="sd">            The flux and flux error for the specified block.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">frame_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">nframes</span> <span class="o">=</span> <span class="n">frame_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">frame_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">nframes</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">nframes</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can not parse `frame_range` of `</span><span class="si">{</span><span class="n">frame_range</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nframes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nframes</span>
+
+        <span class="n">values</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data_per_block</span><span class="p">(</span>
+            <span class="n">start_column</span><span class="o">=</span><span class="n">start_column</span><span class="p">,</span>
+            <span class="n">ncolumns</span><span class="o">=</span><span class="n">ncolumns</span><span class="p">,</span>
+            <span class="n">start_row</span><span class="o">=</span><span class="n">start_row</span><span class="p">,</span>
+            <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span>
+            <span class="n">frame_range</span><span class="o">=</span><span class="n">frame_range</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncolumns</span><span class="p">,</span> <span class="n">nframes</span><span class="p">))</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">flux</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncolumns</span><span class="p">,</span> <span class="n">nframes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nsets</span><span class="p">))</span>
+            <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span>
+
+    <span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_flux</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">corner</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1014</span><span class="p">,</span> <span class="mi">1058</span><span class="p">),</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>
+        <span class="n">frame_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the flux and flux error for a specific block of pixels.</span>
+
+<span class="sd">        This method caches the result to avoid redundant calculations. The flux</span>
+<span class="sd">        and flux error are retrieved for a rectangular block of pixels specified</span>
+<span class="sd">        by the `corner` and `shape` parameters. The data can also be restricted</span>
+<span class="sd">        to a specific range of frames using the `frame_range` parameter.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        corner : tuple of int, optional</span>
+<span class="sd">            The (row, column) coordinates of the top-left corner of the pixel block,</span>
+<span class="sd">            by default (1014, 1058).</span>
+<span class="sd">        shape : tuple of int, optional</span>
+<span class="sd">            The (number of rows, number of columns) shape of the pixel block,</span>
+<span class="sd">            by default (20, 21).</span>
+<span class="sd">        frame_range : tuple of int, optional</span>
+<span class="sd">            The (start, end) frame range to retrieve the data, by default None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of numpy.ndarray</span>
+<span class="sd">            A tuple containing:</span>
+<span class="sd">            - flux: A 3D numpy array of shape (nframes, nrows, ncolumns)</span>
+<span class="sd">            containing the flux data.</span>
+<span class="sd">            - flux_err: A 3D numpy array of shape (nframes, nrows, ncolumns)</span>
+<span class="sd">            containing the flux error data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span> <span class="o">=</span> <span class="n">_sync_call</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">async_get_flux</span><span class="p">,</span>
+            <span class="n">start_column</span><span class="o">=</span><span class="n">corner</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">ncolumns</span><span class="o">=</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">start_row</span><span class="o">=</span><span class="n">corner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">nrows</span><span class="o">=</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">frame_range</span><span class="o">=</span><span class="n">frame_range</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_primary_hdu</span><span class="p">(</span><span class="n">object_key</span><span class="p">,</span> <span class="n">nhdr_blocks</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_fix_primary_hdu</span><span class="p">(</span>
+        <span class="n">_sync_call</span><span class="p">(</span>
+            <span class="n">async_get_primary_hdu</span><span class="p">,</span> <span class="n">object_key</span><span class="o">=</span><span class="n">object_key</span><span class="p">,</span> <span class="n">nhdr_blocks</span><span class="o">=</span><span class="n">nhdr_blocks</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_last_hdu</span><span class="p">(</span><span class="n">object_key</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_sync_call</span><span class="p">(</span><span class="n">async_get_last_hdu</span><span class="p">,</span> <span class="n">object_key</span><span class="o">=</span><span class="n">object_key</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="async_get_primary_hdu">
+<a class="viewcode-back" href="../../apidoc.html#tesscube.query.async_get_primary_hdu">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_primary_hdu</span><span class="p">(</span>
+    <span class="n">object_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nhdr_blocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asynchronously retrieves the primary HDU of a cube FITS file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    object_key : str</span>
+<span class="sd">        The S3 object key of the FITS file (i.e. the file name)</span>
+<span class="sd">    nhdr_blocks: int</span>
+<span class="sd">        The number of HDR_SIZE blocks that constitute the first two headers.</span>
+<span class="sd">        Defaults to 2, which is correct for SPOC.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    astropy.io.fits.PrimaryHDU</span>
+<span class="sd">        The primary HDU of the FITS file, with corrected headers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span>
+        <span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">s3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;tica&quot;</span> <span class="ow">in</span> <span class="n">object_key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="c1"># Retrieve the cube header</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span>
+                <span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span>
+                <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">,</span>
+                <span class="n">Range</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;bytes=0-</span><span class="si">{</span><span class="p">(</span><span class="n">HDR_SIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nhdr_blocks</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">first_bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+                <span class="c1"># Ignore &quot;File may have been truncated&quot; warning</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">AstropyUserWarning</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">first_bytes</span><span class="p">))</span> <span class="k">as</span> <span class="n">hdulist</span><span class="p">:</span>
+                    <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS1&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS2&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS3&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS4&quot;</span><span class="p">],</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS1&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS2&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS3&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS4&quot;</span><span class="p">],</span>
+                    <span class="p">)</span>
+
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;BJDREFI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="mi">2457000</span><span class="p">,</span>
+                        <span class="s2">&quot;integer part of BTJD reference date&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;BJDREFF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="mf">0.00000000</span><span class="p">,</span>
+                        <span class="s2">&quot;fraction of the day in BTJD reference date&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;TIMEUNIT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;d&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;time unit for TIME, TSTART and TSTOP&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># Adding some missing kwds not in TICA (but in Ames-produced SPOC ffis)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;EXTVER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;extension version number (not format version)&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;SIMDATA&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">False</span><span class="p">,</span>
+                        <span class="s2">&quot;file is based on simulated data&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NEXTEND&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;number of standard extensions&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;TSTART&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;STARTTJD&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;observation start time in TJD of first FFI&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;TSTOP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;ENDTJD&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;observation stop time in TJD of last FFI&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CAMERA&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CAMNUM&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;Camera number&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CCD&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CCDNUM&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;CCD chip number&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;ASTATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">None</span><span class="p">,</span>
+                        <span class="s2">&quot;archive state F indicates single orbit processing&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CRMITEN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CRM&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;spacecraft cosmic ray mitigation enabled&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CRBLKSZ&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">None</span><span class="p">,</span>
+                        <span class="s2">&quot;[exposures] s/c cosmic ray mitigation block siz&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;FFIINDEX&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;CADENCE&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;number of FFI cadence interval of first FFI&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATA_REL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">None</span><span class="p">,</span>
+                        <span class="s2">&quot;data release version number&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="n">date_obs</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;TSTART&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;BJDREFI&quot;</span><span class="p">],</span>
+                        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;jd&quot;</span><span class="p">,</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">iso</span>
+                    <span class="n">date_end</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;TSTOP&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;BJDREFI&quot;</span><span class="p">],</span>
+                        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;jd&quot;</span><span class="p">,</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">iso</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATE-OBS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">date_obs</span><span class="p">,</span>
+                        <span class="s2">&quot;TSTART as UTC calendar date of first FFI&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATE-END&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">date_end</span><span class="p">,</span>
+                        <span class="s2">&quot;TSTOP as UTC calendar date of last FFI&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;FILEVER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;file format version&quot;</span><span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;RADESYS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">None</span><span class="p">,</span>
+                        <span class="s2">&quot;reference frame of celestial coordinates&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;SCCONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">None</span><span class="p">,</span>
+                        <span class="s2">&quot;spacecraft configuration ID&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;TIMVERSN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">None</span><span class="p">,</span>
+                        <span class="s2">&quot;OGIP memo number for file format&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="k">return</span> <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Retrieve the cube header</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span>
+                <span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span>
+                <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">,</span>
+                <span class="n">Range</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;bytes=0-</span><span class="si">{</span><span class="p">(</span><span class="n">HDR_SIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nhdr_blocks</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">first_bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+                <span class="c1"># Ignore &quot;File may have been truncated&quot; warning</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">AstropyUserWarning</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">first_bytes</span><span class="p">))</span> <span class="k">as</span> <span class="n">hdulist</span><span class="p">:</span>
+                    <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS1&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS2&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS3&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS4&quot;</span><span class="p">],</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS1&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS2&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS3&quot;</span><span class="p">],</span>
+                        <span class="n">hdulist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS4&quot;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="async_get_last_hdu">
+<a class="viewcode-back" href="../../apidoc.html#tesscube.query.async_get_last_hdu">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_last_hdu</span><span class="p">(</span><span class="n">object_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asynchronously retrieves the last HDU of a cube FITS file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    object_key : str</span>
+<span class="sd">        The S3 object key of the FITS file  (i.e. the file name)</span>
+<span class="sd">    end : int</span>
+<span class="sd">        The byte position to start retrieving data from.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    astropy.io.fits.PrimaryHDU</span>
+<span class="sd">        The last HDU of the FITS file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># This seems wrong for a lot of sets</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span>
+        <span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">s3</span><span class="p">:</span>
+        <span class="c1"># Retrieve the cube header</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span>
+            <span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">,</span> <span class="n">Range</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;bytes=</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s2">-&quot;</span>
+        <span class="p">)</span>
+        <span class="n">first_bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="c1"># n_pixels = len(first_bytes) // BYTES_PER_PIX</span>
+        <span class="c1"># values = np.asarray(struct.unpack(&quot;&gt;&quot; + &quot;f&quot; * n_pixels, first_bytes))</span>
+        <span class="c1"># return values</span>
+        <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+            <span class="n">BytesIO</span><span class="p">(</span><span class="n">first_bytes</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="p">)),</span>
+            <span class="n">ignore_missing_simple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">lazy_load_hdus</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="async_get_ffi">
+<a class="viewcode-back" href="../../apidoc.html#tesscube.query.async_get_ffi">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_get_ffi</span><span class="p">(</span><span class="n">ffi_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asynchronously retrieves a full-frame image (FFI) FITS file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ffi_name : str</span>
+<span class="sd">        The name of the full-frame image (FFI) as stored in s3.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    astropy.io.fits.HDUList</span>
+<span class="sd">        The HDU list of the retrieved FFI FITS file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">date</span><span class="p">,</span> <span class="n">sector_str</span><span class="p">,</span> <span class="n">camera</span><span class="p">,</span> <span class="n">ccd</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ffi_name</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+    <span class="n">object_key</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;tess/public/ffi/</span><span class="si">{</span><span class="n">sector_str</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">date</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">date</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">camera</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">ccd</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ffi_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span>
+        <span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">s3</span><span class="p">:</span>
+        <span class="c1"># Retrieve the cube header</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">object_key</span><span class="p">)</span>
+        <span class="n">data_bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Body&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+            <span class="n">BytesIO</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">),</span>
+            <span class="n">ignore_missing_simple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">lazy_load_hdus</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_aws_directories">
+<a class="viewcode-back" href="../../apidoc.html#tesscube.query.list_aws_directories">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_aws_directories</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;tess/public/&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lists the directories in the stpubdata bucket for the given `dir`&quot;&quot;&quot;</span>
+    <span class="c1"># Initialize the S3 client with unsigned requests</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">))</span>
+
+    <span class="c1"># Use a paginator to handle large result sets</span>
+    <span class="n">paginator</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s2">&quot;list_objects_v2&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Iterate through all pages</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">Prefix</span><span class="o">=</span><span class="nb">dir</span><span class="p">,</span> <span class="n">Delimiter</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;CommonPrefixes&quot;</span> <span class="ow">in</span> <span class="n">page</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">prefix_obj</span> <span class="ow">in</span> <span class="n">page</span><span class="p">[</span><span class="s2">&quot;CommonPrefixes&quot;</span><span class="p">]:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix_obj</span><span class="p">[</span><span class="s2">&quot;Prefix&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">r</span></div>
+
+
+
+<div class="viewcode-block" id="list_aws_files">
+<a class="viewcode-back" href="../../apidoc.html#tesscube.query.list_aws_files">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_aws_files</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;tess/public/&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lists the files in the stpubdata bucket for a given `dir`&quot;&quot;&quot;</span>
+    <span class="c1"># Initialize the S3 client with unsigned requests</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;s3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">))</span>
+
+    <span class="c1"># Use a paginator to handle large result sets</span>
+    <span class="n">paginator</span> <span class="o">=</span> <span class="n">s3</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s2">&quot;list_objects_v2&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Iterate through all pages</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">BUCKET_NAME</span><span class="p">,</span> <span class="n">Prefix</span><span class="o">=</span><span class="nb">dir</span><span class="p">,</span> <span class="n">Delimiter</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;Contents&quot;</span> <span class="ow">in</span> <span class="n">page</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">page</span><span class="p">[</span><span class="s2">&quot;Contents&quot;</span><span class="p">]:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;Key&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">r</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, TESS Science Support Center.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
