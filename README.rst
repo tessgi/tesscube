@@ -208,6 +208,14 @@ Please include a self-contained example that fully demonstrates your problem or 
 Changelog:
 ==========
 
+1.2.2dev (unreleased)
+=====================
+  - Fixed bug in get_ffi [#19]
+  - Fixed missing comments in fits header [#21]
+
+1.2.1
+======
+
   - Fixed barycentric timing correction with lkspacecraft package
   - Added from_name method
   - Added ability to use "TICA" FFIs. This is experimental and might be buggy.

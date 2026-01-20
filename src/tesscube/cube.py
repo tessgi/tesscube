@@ -219,13 +219,13 @@ class TESSCube(QueryMixin, WCSMixin):
         if time is not None:
             start = Time(self.tstart + 2457000, format="jd")
             end = Time(self.tstop + 2457000, format="jd")
-            t = Time.now()
-            t = Time(2459343.87182313, format="jd")
-            if not ((t > start).any() & (t < end).any()):
+            #t = Time.now()
+            #t = Time(2459343.87182313, format="jd")
+            if not ((time > start).any() & (time < end).any()):
                 raise ValueError(
                     f"Input time is not during Sector {self.sector} observations."
                 )
-            ffi_name = self.ffi_names[np.where((t > start))[0][-1]]
+            ffi_name = self.ffi_names[np.where((time > start))[0][-1]]
 
         if index is not None:
             ffi_name = self.ffi_names[index]
