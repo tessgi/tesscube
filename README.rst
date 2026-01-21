@@ -215,7 +215,6 @@ Changelog:
 
 1.2.1
 ======
-
   - Fixed barycentric timing correction with lkspacecraft package
   - Added from_name method
   - Added ability to use "TICA" FFIs. This is experimental and might be buggy.

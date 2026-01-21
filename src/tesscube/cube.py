@@ -219,8 +219,8 @@ class TESSCube(QueryMixin, WCSMixin):
         if time is not None:
             start = Time(self.tstart + 2457000, format="jd")
             end = Time(self.tstop + 2457000, format="jd")
-            # t = Time.now()
-            # t = Time(2459343.87182313, format="jd")
+            #t = Time.now()
+            #t = Time(2459343.87182313, format="jd")
             if not ((time > start).any() & (time < end).any()):
                 raise ValueError(
                     f"Input time is not during Sector {self.sector} observations."
