@@ -36,7 +36,7 @@ def get_header_dict(cube):
             hdu.data[k][0]
             if isinstance(hdu.data[k][0], str)
             else np.nanmedian(hdu.data[k]),
-            c,
+            c if c != "" else hdr[k],
         )
         if (k in hdu.data.columns.names)
         else fits.Card(k, hdr[k], c)
