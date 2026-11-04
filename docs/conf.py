@@ -10,7 +10,9 @@
 try:
     from sphinx_astropy.conf.v2 import *  # noqa: F403
 except (ImportError, AttributeError):
-    print("sphinx_astropy not found or incompatible, default configuration will be used.")
+    print(
+        "sphinx_astropy not found or incompatible, default configuration will be used."
+    )
 import os
 import sys
 
