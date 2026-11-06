@@ -9,8 +9,10 @@
 # Try to import the global configuration from sphinx-astropy
 try:
     from sphinx_astropy.conf.v2 import *  # noqa: F403
-except ImportError:
-    print("sphinx_astropy not found, default configuration will be used.")
+except (ImportError, AttributeError):
+    print(
+        "sphinx_astropy not found or incompatible, default configuration will be used."
+    )
 import os
 import sys
 
